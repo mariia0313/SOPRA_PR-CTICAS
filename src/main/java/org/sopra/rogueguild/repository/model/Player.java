@@ -27,13 +27,21 @@ public class Player {
         inventory.add(item);
     }
 
-    public String getInventory(){
+    public String showInventory(){
         String items = "";
         for (Item item : inventory){
             items += item.toString() + "\n ";
         }
 
         return items;
+    }
+
+    public List<Item> getInventory(){
+        return inventory;
+    }
+
+    public void addGold(int gold){
+        this.gold += gold;
     }
 }
 

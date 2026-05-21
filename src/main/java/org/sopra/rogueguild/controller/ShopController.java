@@ -6,6 +6,8 @@ import org.sopra.rogueguild.repository.ShopRepository;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.view.ViewDisplay;
+import org.sopra.rogueguild.view.components.MessageView;
+import org.sopra.rogueguild.view.components.PlayerView;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
 
 public class ShopController {
@@ -38,7 +40,24 @@ public class ShopController {
                     view.buyResult(buyResponse);
                     break;
                 case 3:
-                    // TODO Logic to sell and add products to stock
+
+                    if (player.getInventory().isEmpty()) {
+                        MessageView message = new MessageView(System.out, 10);
+                        message.showMessage("No tienes items en el inventario.");
+                    } else {
+                        PlayerView playerView = new PlayerView(System.out);
+                        playerView.playerInventoryToSell(player);
+                        int itemIdToSell = Integer.parseInt(sc.nextLine());
+                        int realItemPosition = itemIdToSell-1;
+                        if (realItemPosition < 0 || realItemPosition >= player.getInventory().size()){
+                            MessageView message = new MessageView(System.out, 10);
+                            message.showMessage("Error. Id introducido inválido");
+                        } else {
+                            sellProcess(player.getInventory().get(realItemPosition));
+                        }
+
+                    }
+
                     break;
                 case 4:
                     // TODO Logic to ...
@@ -66,6 +85,20 @@ public class ShopController {
     }
 
     private void sellProcess(Item item) {
-        //TODO Sell process
+        player.removeItem(item);
+
+        int nextShopId = repository.getAllStock().keySet().stream()
+                            .max(Integer::compare)
+                            .orElse(0) + 1;
+        repository.getAllStock().put(nextShopId, item);
+
+        double rawSellPrice = item.getBasePrice() * 0.80;
+        int goldRecieved = (int) (Math.round(rawSellPrice / 5.0) * 5);
+
+        player.addGold(goldRecieved);
+
+        System.out.println("Has vendido " + item.getName() + " por " + goldRecieved + " monedas.");
+
+
     }
 }
