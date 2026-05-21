@@ -38,7 +38,10 @@ public class ShopController {
                     view.buyResult(buyResponse);
                     break;
                 case 3:
-                    // TODO Logic to sell and add products to stock
+                    System.out.println("    +---------------------------------------------------+");
+                    System.out.println("    |                 " + ("INVENTARIO JUGADOR") + "                  |");
+                    System.out.println("    +--+------------------------------------------------+");
+                    player.getInventory();
                     break;
                 case 4:
                     // TODO Logic to ...
@@ -66,6 +69,6 @@ public class ShopController {
     }
 
     private void sellProcess(Item item) {
-        //TODO Sell process
+    
     }
 }
