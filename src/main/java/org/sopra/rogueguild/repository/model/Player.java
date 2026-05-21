@@ -9,9 +9,12 @@ public class Player {
         this.name = name;
         this.gold = gold;
     }
+
     public String getName() { return name; }
+
     public int getGold() { return gold; }
-    public void buy(Item item) { this.gold -= item.getPrice(); this.inventory.add(item); }
+
+    public void buy(Item item) { this.gold -= item.getPrice(); addItem(item); }
     public void removeItem(Item item) {
         boolean removed = inventory.remove(item);
         if (!removed) {
@@ -19,5 +22,18 @@ public class Player {
         }
     }
 
+
+    public void addItem(Item item) {
+        inventory.add(item);
+    }
+
+    public String getInventory(){
+        String items = "";
+        for (Item item : inventory){
+            items += item.toString() + "\n ";
+        }
+
+        return items;
+    }
 }
 
