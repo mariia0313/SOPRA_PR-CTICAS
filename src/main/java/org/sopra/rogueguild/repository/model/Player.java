@@ -13,11 +13,11 @@ public class Player {
     public int getGold() { return gold; }
     public void buy(Item item) { this.gold -= item.getPrice(); this.inventory.add(item); }
     public void removeItem(Item item) {
-    boolean removed = inventory.remove(item);
-    if (!removed) {
-        System.out.println("El item no está en el inventario");
+        boolean removed = inventory.remove(item);
+        if (!removed) {
+            System.out.println("El item no está en el inventario");
+        }
     }
-}
 
 }
 
