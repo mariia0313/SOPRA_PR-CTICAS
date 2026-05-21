@@ -19,5 +19,7 @@ public abstract class Item {
 
     public int getBasePrice() { return basePrice; }
 
+    public void setPrice(int price) { this.price = price; }
+
     public String toString() { return name + " (" + price + " oro)"; }
 }
