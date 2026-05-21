@@ -39,5 +39,9 @@ public class Player {
     public List<Item> getInventory(){
         return inventory;
     }
+
+    public void addGold(int gold){
+        this.gold += gold;
+    }
 }
 
