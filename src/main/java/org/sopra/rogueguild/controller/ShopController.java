@@ -5,6 +5,8 @@ import java.util.Scanner;
 import org.sopra.rogueguild.repository.ShopRepository;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
+import org.sopra.rogueguild.repository.model.WorldEvent;
+import org.sopra.rogueguild.repository.model.WorldEventGenerator;
 import org.sopra.rogueguild.view.ViewDisplay;
 import org.sopra.rogueguild.view.components.MessageView;
 import org.sopra.rogueguild.view.components.PlayerView;
@@ -24,6 +26,9 @@ public class ShopController {
     }
 
     public void start() {
+        WorldEventGenerator worldEventGenerator = new WorldEventGenerator();
+        WorldEvent worldEvent = worldEventGenerator.generateRandomWorldEventer(repository);
+        MessageView message = new MessageView(System.out, 10);
         int opt;
         do {
             view.landingPage();
@@ -31,9 +36,11 @@ public class ShopController {
             opt = Integer.parseInt(sc.nextLine());
             switch (opt) {
                 case 1:
+                    message.showMessage(worldEvent.getEventDesription());
                     view.displayStock(repository.getAllStock(), false);
                     break;
                 case 2:
+                    message.showMessage(worldEvent.getEventDesription());
                     view.displayStock(repository.getAllStock(), true);
                     int itemId = Integer.parseInt(sc.nextLine());
                     BuyResponse buyResponse = buyProcess(itemId);
@@ -42,7 +49,6 @@ public class ShopController {
                 case 3:
 
                     if (player.getInventory().isEmpty()) {
-                        MessageView message = new MessageView(System.out, 10);
                         message.showMessage("No tienes items en el inventario.");
                     } else {
                         PlayerView playerView = new PlayerView(System.out);
@@ -50,7 +56,6 @@ public class ShopController {
                         int itemIdToSell = Integer.parseInt(sc.nextLine());
                         int realItemPosition = itemIdToSell-1;
                         if (realItemPosition < 0 || realItemPosition >= player.getInventory().size()){
-                            MessageView message = new MessageView(System.out, 10);
                             message.showMessage("Error. Id introducido inválido");
                         } else {
                             sellProcess(player.getInventory().get(realItemPosition));
