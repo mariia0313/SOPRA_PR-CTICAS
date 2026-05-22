@@ -8,4 +8,8 @@ public class Weapon extends Item {
         super(name, price, ItemCategory.WEAPON);
         this.damage = damage;
     }
+
+    public String toString(){
+        return getName() + " (" + getPrice() + " oro) | Daño: " + damage;
+    }
 }

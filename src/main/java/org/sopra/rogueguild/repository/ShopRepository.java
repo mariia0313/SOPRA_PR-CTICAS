@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.sopra.rogueguild.repository.model.Armor;
 import org.sopra.rogueguild.repository.model.Item;
+import org.sopra.rogueguild.repository.model.ItemGenerator;
 import org.sopra.rogueguild.repository.model.Weapon;
 
 public class ShopRepository {
@@ -16,9 +17,15 @@ public class ShopRepository {
     }
 
     private void loadInitialStock() {
-        stock.put(1, new Weapon("Daga de las Sombras", 150, 10));
-        stock.put(2, new Weapon("Espada del Renegado", 350, 15));
-        stock.put(3, new Armor("Armadura del Sol Naciente", 200, 5));
+        // stock.put(1, new Weapon("Daga de las Sombras", 150, 10));
+        // stock.put(2, new Weapon("Espada del Renegado", 350, 15));
+        // stock.put(3, new Armor("Armadura del Sol Naciente", 200, 5));
+
+        ItemGenerator itemGenerator = new ItemGenerator();
+
+        for (int i = 1; i <= 5; i++){
+            stock.put(i, itemGenerator.createRandomItem());
+        }
     }
 
     public Item getItem(int id) {
