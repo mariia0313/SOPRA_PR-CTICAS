@@ -8,4 +8,9 @@ public class Armor extends Item {
     super(name, price, ItemCategory.ARMOR);
     this.shield = shield;
   }
+
+  public String toString(){
+        return getName() + " (" + getPrice() + " oro) | Escudo: " + shield;
+    }
+
 }

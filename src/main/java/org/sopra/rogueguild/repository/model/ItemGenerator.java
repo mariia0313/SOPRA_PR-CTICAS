@@ -13,15 +13,8 @@ public class ItemGenerator {
     public ItemGenerator(){
         this.random = new Random();
     }
-
-    // public static Item generate() {
-    //     ItemCategory category = randomCategory();
-        
-    //     Item item = new Item(name, price, category);
-    //     return ;
-    // }
     
-    private Item createRandomItem(){
+    public Item createRandomItem(){
         ItemCategory [] categories = ItemCategory.values();
         ItemCategory selectedCategory = categories[random.nextInt(categories.length)];
         Random random = new Random();
@@ -40,34 +33,56 @@ public class ItemGenerator {
 
         int maxPrice = 0;
         int minPrice = 0;
+        int atributteValue = 0;
+        int finalPrice = 0;
+        Item item = null;
 
         switch (selectedCategory) {
             case POTION:
                 maxPrice = 40;
                 minPrice = 10;
+                atributteValue = random.nextInt(50);
+                finalPrice = getFinalPrice(maxPrice, minPrice);
+                item = new Potion(name, finalPrice, atributteValue);
                 break;
             case BOOTS: 
                 minPrice = 20;
-                maxPrice = 100; 
+                maxPrice = 100;
+                atributteValue = random.nextInt(50);
+                finalPrice = getFinalPrice(maxPrice, minPrice);
+                item = new Boots(name, finalPrice, atributteValue); 
                 break; 
             case HELMET: 
                 minPrice = 20; 
-                maxPrice = 150; 
+                maxPrice = 150;
+                atributteValue = random.nextInt(50);
+                finalPrice = getFinalPrice(maxPrice, minPrice);
+                item = new Helmet(name, finalPrice, atributteValue); 
                 break; 
             case ARMOR: 
                 minPrice = 50; 
-                maxPrice = 200; 
+                maxPrice = 200;
+                atributteValue = random.nextInt(50);
+                finalPrice = getFinalPrice(maxPrice, minPrice);
+                item = new Armor(name, finalPrice, atributteValue); 
                 break; 
             case WEAPON:
                 minPrice = 100; 
-                maxPrice = 300; 
+                maxPrice = 300;
+                atributteValue = random.nextInt(50);
+                finalPrice = getFinalPrice(maxPrice, minPrice);
+                item = new Weapon(name, finalPrice, atributteValue); 
                 break;  
             }
-            int rawPrice = random.nextInt((maxPrice - minPrice) + 1) + minPrice; 
-            int finalPrice = (int) (Math.round(rawPrice / 5.0) * 5);
 
             
-        return;
+        return item;
+    }
+
+    private int getFinalPrice(int maxPrice, int minPrice) {
+        int rawPrice = random.nextInt((maxPrice - minPrice) + 1) + minPrice; 
+        int finalPrice = (int) (Math.round(rawPrice / 5.0) * 5);
+        return finalPrice;
     }
 
     private final String[] suffixes = { 
@@ -76,8 +91,5 @@ public class ItemGenerator {
         "del dragón", "del fénix", "del caos", "del vacío", "del alba", "de la luna", 
         "del norte", "de las ruinas", "del bosque maldito", "de las profundidades", "de la montaña" 
     };
-    
-
-
 
 }
