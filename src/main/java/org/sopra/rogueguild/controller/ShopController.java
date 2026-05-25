@@ -2,16 +2,17 @@ package org.sopra.rogueguild.controller;
 
 import java.util.Scanner;
 
+import org.sopra.rogueguild.controller.dto.BuyResponse;
 import org.sopra.rogueguild.repository.ShopRepository;
 import org.sopra.rogueguild.repository.model.Incursion;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
+import org.sopra.rogueguild.repository.model.Quests;
 import org.sopra.rogueguild.repository.model.WorldEvent;
 import org.sopra.rogueguild.repository.model.WorldEventGenerator;
 import org.sopra.rogueguild.view.ViewDisplay;
 import org.sopra.rogueguild.view.components.MessageView;
 import org.sopra.rogueguild.view.components.PlayerView;
-import org.sopra.rogueguild.controller.dto.BuyResponse;
 
 public class ShopController {
     private final Player player;
@@ -74,6 +75,11 @@ public class ShopController {
                     }
 
                     break;
+                case 5: 
+                    Quests quests = new Quests();
+                    quests.showAvailableQuests();
+                    int option2 = sc.nextInt();
+                    break;
                 case 0:
                     view.quitMessage();
                     break;
@@ -119,4 +125,6 @@ public class ShopController {
 
         repository.loadInitialStock();
     }
+
+    
 }

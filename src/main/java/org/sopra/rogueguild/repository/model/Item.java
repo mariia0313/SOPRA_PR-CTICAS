@@ -21,6 +21,8 @@ public abstract class Item {
 
     public ItemCategory getItemCategory() { return category; }
 
+    public void setCategory(ItemCategory itemCategory){this.category = itemCategory;}
+
     public void setPrice(int price) { this.price = price; }
 
     public String toString() { return name + " (" + price + " oro)"; }
