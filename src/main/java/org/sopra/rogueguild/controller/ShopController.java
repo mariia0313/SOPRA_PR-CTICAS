@@ -117,5 +117,6 @@ public class ShopController {
         MessageView message = new MessageView(System.out, 10);
         message.showMessage(incursion.getDescription());
 
+        repository.loadInitialStock();
     }
 }
