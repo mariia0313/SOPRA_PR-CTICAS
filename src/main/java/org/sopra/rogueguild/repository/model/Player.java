@@ -5,6 +5,8 @@ public class Player {
     private String name;
     private int gold;
     private List<Item> inventory = new ArrayList<>();
+    private ArrayList<Quest> quests = new ArrayList<>();
+
     public Player(String name, int gold) {
         this.name = name;
         this.gold = gold;
