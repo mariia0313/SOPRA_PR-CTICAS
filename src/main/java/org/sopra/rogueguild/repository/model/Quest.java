@@ -1,10 +1,10 @@
 package org.sopra.rogueguild.repository.model;
-
+import org.sopra.rogueguild.view.components.MessageView;
 import java.util.ArrayList;
 
 public class Quest {
 
-    private static Quests quests;
+    private static Quests quests = new Quests();
     private String description;
     private int goldReward;
     private ArrayList<ItemCategory> requiredItems;
@@ -23,10 +23,10 @@ public class Quest {
         boolean questRequirements = false;
         boolean isMatched = false;
         int itemsMatched = 0;
-        for (Item item : player.getInventory()) {
+        for(ItemCategory category : this.requiredItems){
             isMatched = false;
-            for(ItemCategory category : this.requiredItems){
-                if(item.getItemCategory().equals(category) && isMatched ){
+                for (Item item : player.getInventory()) {
+                if(item.getItemCategory().equals(category) && !isMatched ){
                     isMatched = true;
                     itemsMatched++;
                 }
@@ -50,6 +50,29 @@ public class Quest {
         return this.isCompleted;
     }
 
+    public int getGoldReward(){
+        return goldReward;
+    }
 
+    public ArrayList<ItemCategory> requirementsLeft(Player player){
+        ArrayList<ItemCategory> requirementsLeft = new ArrayList<>();
+        boolean isMatched = false;
+        int itemsMatched = 0;
+        for(ItemCategory category : this.requiredItems){
+            isMatched = false;
+                for (Item item : player.getInventory()) {
+                if(item.getItemCategory().equals(category) && !isMatched ){
+                    isMatched = true;
+                    itemsMatched++;
+                }
+            }
+
+            if (isMatched == false) {
+                requirementsLeft.add(category);
+            }
+        }
+        return requirementsLeft;
+
+    }
 
 }

@@ -6,7 +6,9 @@ import org.sopra.rogueguild.controller.dto.BuyResponse;
 import org.sopra.rogueguild.repository.ShopRepository;
 import org.sopra.rogueguild.repository.model.Incursion;
 import org.sopra.rogueguild.repository.model.Item;
+import org.sopra.rogueguild.repository.model.ItemCategory;
 import org.sopra.rogueguild.repository.model.Player;
+import org.sopra.rogueguild.repository.model.Quest;
 import org.sopra.rogueguild.repository.model.Quests;
 import org.sopra.rogueguild.repository.model.WorldEvent;
 import org.sopra.rogueguild.repository.model.WorldEventGenerator;
@@ -26,8 +28,10 @@ public class ShopController {
         this.repository = r;
         this.sc = new Scanner(System.in);
     }
-
+    
     public void start() {
+        Quests quests = new Quests();
+        quests.createInitialQuests();
         WorldEventGenerator worldEventGenerator = new WorldEventGenerator();
         WorldEvent worldEvent = worldEventGenerator.generateRandomWorldEventer(repository);
         MessageView message = new MessageView(System.out, 10);
@@ -76,9 +80,13 @@ public class ShopController {
 
                     break;
                 case 5: 
-                    Quests quests = new Quests();
                     quests.showAvailableQuests();
                     int option2 = sc.nextInt();
+                    if (option2 < 1 || option2 > quests.getQuests().size()){
+                        message.showMessage("Opción inválida");
+                    } else {
+                        doQuest(option2, quests);
+                    }
                     break;
                 case 0:
                     view.quitMessage();
@@ -124,6 +132,24 @@ public class ShopController {
         message.showMessage(incursion.getDescription());
 
         repository.loadInitialStock();
+    }
+
+    private void doQuest(int opt, Quests quests){
+        MessageView message = new MessageView(System.out, 10);
+        Quest quest = quests.getQuests().get(opt - 1);
+        if (quest.checkRequirement(player) == true) {
+            player.addGold(quest.getGoldReward());
+            quest.completeQuest();
+            message.showMessage("La misión ha sido completada con éxito. Has ganado " + quest.getGoldReward() + " de oro.");
+        } else {
+            String requirements = "No se cumplen con los requisitos requeridos para completar la misión";
+            for (ItemCategory category : quest.requirementsLeft(player)) {
+               requirements += "\nNecesitas un objeto de categoría " + category.name(); 
+            }
+
+            message.showMessage(requirements);
+        }
+        ;
     }
 
     
