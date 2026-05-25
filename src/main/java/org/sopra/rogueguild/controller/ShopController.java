@@ -3,6 +3,7 @@ package org.sopra.rogueguild.controller;
 import java.util.Scanner;
 
 import org.sopra.rogueguild.repository.ShopRepository;
+import org.sopra.rogueguild.repository.model.Incursion;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.repository.model.WorldEvent;
@@ -47,7 +48,6 @@ public class ShopController {
                     view.buyResult(buyResponse);
                     break;
                 case 3:
-
                     if (player.getInventory().isEmpty()) {
                         message.showMessage("No tienes items en el inventario.");
                     } else {
@@ -65,7 +65,14 @@ public class ShopController {
 
                     break;
                 case 4:
-                    // TODO Logic to ...
+                    message.showMessage("Qué tipo de incursión quieres realizar?\n 1. Incursión de conquista.\n 2. Incursión de saqueo.\n 3. Incursión menor");
+                    int option = Integer.parseInt(sc.nextLine());
+                    if (option > 3 || option < 1){
+                        message.showMessage("Opción inválida");
+                    } else {
+                        doIncursion(option);
+                    }
+
                     break;
                 case 0:
                     view.quitMessage();
@@ -103,7 +110,12 @@ public class ShopController {
         player.addGold(goldRecieved);
 
         System.out.println("Has vendido " + item.getName() + " por " + goldRecieved + " monedas.");
+    }
 
+    private void doIncursion(int opt){
+        Incursion incursion = new Incursion(opt, player);
+        MessageView message = new MessageView(System.out, 10);
+        message.showMessage(incursion.getDescription());
 
     }
 }

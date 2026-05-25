@@ -10,36 +10,78 @@ public class Incursion {
     private int goldReward;
     private Item itemReward;
 
-    private Incursion(String description, String shortName){
-        this.description = description;
-        this.shortName = shortName;
+    public Incursion(int option, Player player){
+        switch (option) {
+            case 1:
+                createIncursionMajorItem(player);
+                break;
+
+            case 2:
+                createIncursionGoldReward(player);;
+                break;
+                
+            case 3:
+                createIncursionMinorItemWithGold(player);
+                break;    
+        
+            default:
+                break;
+        }
     }
 
-    public static Incursion createIncursionGoldReward(String description, String shortName){
-        Incursion incursion = new Incursion(description, shortName);
-        incursion.itemReward = null;
+    public void createIncursionGoldReward(Player player){
+        this.shortName = "Incursión de saqueo";
+        this.itemReward = null;
         Random random = new Random();
         int rawGold = 101 + random.nextInt(100);
-        incursion.goldReward = (int) (Math.round(rawGold / 5.0) * 5);
-        return incursion;
+        this.goldReward = (int) (Math.round(rawGold / 5.0) * 5);
+        int oldGold = player.getGold();
+        if (player.addGold(goldReward) == true){
+            this.description = "Has obtenido " + (500-oldGold) + " de oro";
+        } else {
+            this.description = "Has obtenido " + this.goldReward + " de oro";
+        }
     }
 
-    public static Incursion createIncursionMajorItem(String description, String shortName){
-        Incursion incursion = new Incursion(description, shortName);
-        incursion.goldReward = 0;
+    public void createIncursionMajorItem(Player player){
+        this.shortName = "Incursión de alto valor";
+        this.goldReward = 0;
         ItemGenerator item = new ItemGenerator();
-        incursion.itemReward = item.createRandomItem();
-        return incursion;
+        this.itemReward = item.createRandomItem();
+        this.description = "Has obtenido el objeto " + itemReward.getName();
+        player.addItem(itemReward);
     }
     
-    public static Incursion createIncursionMinorItemWithGold(String description, String shortName){
-        Incursion incursion = new Incursion(description, shortName);
-        ItemGenerator item = new ItemGenerator();
-        incursion.itemReward = item.createRandomItem();
+    public void createIncursionMinorItemWithGold(Player player){
+        this.shortName = "Incursión menor";
+        ItemGenerator itemGenerator = new ItemGenerator();
+        Item item = itemGenerator.createRandomItem();
         Random random = new Random();
-        int rawGold = 10 + random.nextInt(50);
-        incursion.goldReward = (int) (Math.round(rawGold / 5.0) * 5);
-        return incursion;
+        int rawGold = random.nextInt(50) + 1;
+        item.setPrice((int) (Math.round(rawGold / 5.0) * 5));
+        rawGold = random.nextInt(30) + 1;
+        this.goldReward = (int) (Math.round(rawGold / 5.0) * 5);
+        this.itemReward = item;
+        int oldGold = player.getGold();
+        if (player.addGold(goldReward) == true){
+            this.description = "Has obtenido " + (500-oldGold) + " de oro y el objeto " + this.itemReward.getName();;
+        } else {
+            this.description = "Has obtenido " + this.goldReward + " de oro y el objeto " + this.itemReward.getName();;
+        }
+
+        player.addItem(itemReward);
     }
 
+
+    public int getGold(){
+        return goldReward;
+    }
+
+    public Item getItem(){
+        return itemReward;
+    }
+
+    public String getDescription(){
+        return description;
+    }
 }
