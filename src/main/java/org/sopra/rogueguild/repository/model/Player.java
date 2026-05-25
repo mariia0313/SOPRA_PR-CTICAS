@@ -40,8 +40,19 @@ public class Player {
         return inventory;
     }
 
-    public void addGold(int gold){
+    public boolean addGold(int gold){
         this.gold += gold;
+        return goldLimit();
+    }
+
+    public boolean goldLimit(){
+        boolean isPastLimit = false;
+        if (this.gold > 500) {
+            this.gold = 500;
+            isPastLimit = true;
+        }
+
+        return isPastLimit;
     }
 }
 
