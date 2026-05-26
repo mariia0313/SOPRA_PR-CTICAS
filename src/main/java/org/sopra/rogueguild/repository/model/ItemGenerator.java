@@ -1,7 +1,6 @@
 package org.sopra.rogueguild.repository.model;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Random;
 
 public class ItemGenerator {
@@ -21,14 +20,31 @@ public class ItemGenerator {
         int numero = random.nextInt(categories.length);
         boolean isUnique = false;
         String name = "";
+        int trys = 0;
+
+        int probability = random.nextInt(100) + 1; 
+        
+        if (probability <= 5) {
+            selectedCategory = ItemCategory.OTHERS;
+        } else {
+            ItemCategory[] comunes = {
+                ItemCategory.POTION, 
+                ItemCategory.BOOTS, 
+                ItemCategory.HELMET, 
+                ItemCategory.ARMOR, 
+                ItemCategory.WEAPON
+            };
+            selectedCategory = comunes[random.nextInt(comunes.length)];
+        }
         
         while(!isUnique){
             String suffix = suffixes[random.nextInt(suffixes.length)];
             String preffix = selectedCategory.getRandomPrefix();
             name = preffix + " " + suffix;
-            if(generatedItems.add(name)){
+            if(generatedItems.add(name) || trys > 50){
                 isUnique = true;
             }
+            trys++;
         }
 
         int maxPrice = 0;
@@ -42,45 +58,54 @@ public class ItemGenerator {
                 maxPrice = 40;
                 minPrice = 10;
                 atributteValue = random.nextInt(50);
-                finalPrice = getFinalPrice(maxPrice, minPrice);
+                finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Potion(name, finalPrice, atributteValue);
                 break;
             case BOOTS: 
                 minPrice = 20;
                 maxPrice = 100;
                 atributteValue = random.nextInt(50);
-                finalPrice = getFinalPrice(maxPrice, minPrice);
+                finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Boots(name, finalPrice, atributteValue); 
                 break; 
             case HELMET: 
                 minPrice = 20; 
                 maxPrice = 150;
                 atributteValue = random.nextInt(50);
-                finalPrice = getFinalPrice(maxPrice, minPrice);
+                finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Helmet(name, finalPrice, atributteValue); 
                 break; 
             case ARMOR: 
                 minPrice = 50; 
                 maxPrice = 200;
                 atributteValue = random.nextInt(50);
-                finalPrice = getFinalPrice(maxPrice, minPrice);
+                finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Armor(name, finalPrice, atributteValue); 
                 break; 
             case WEAPON:
                 minPrice = 100; 
                 maxPrice = 300;
                 atributteValue = random.nextInt(50);
-                finalPrice = getFinalPrice(maxPrice, minPrice);
+                finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Weapon(name, finalPrice, atributteValue); 
-                break;  
+                break;
+            
+            case OTHERS:
+                minPrice = 250; 
+                maxPrice = 300;
+                atributteValue = random.nextInt(50);
+                finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
+                item = new Others(name, finalPrice, atributteValue);
+                break;
             }
 
             
         return item;
     }
 
-    private int getFinalPrice(int maxPrice, int minPrice) {
-        int rawPrice = random.nextInt((maxPrice - minPrice) + 1) + minPrice; 
+    private int getFinalPrice(int maxPrice, int minPrice, int atributteValue) {
+        int range = maxPrice - minPrice;
+        int rawPrice = minPrice + (int)((atributteValue / 50.0) * range); 
         int finalPrice = (int) (Math.round(rawPrice / 5.0) * 5);
         return finalPrice;
     }
