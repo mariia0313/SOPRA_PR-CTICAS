@@ -39,7 +39,7 @@ public class ShopController {
         do {
             view.landingPage();
             view.playerStatus(player);
-            opt = Integer.parseInt(sc.nextLine());
+            opt = readNumber();
             switch (opt) {
                 case 1:
                     message.showMessage(worldEvent.getEventDesription());
@@ -48,9 +48,11 @@ public class ShopController {
                 case 2:
                     message.showMessage(worldEvent.getEventDesription());
                     view.displayStock(repository.getAllStock(), true);
-                    int itemId = Integer.parseInt(sc.nextLine());
-                    BuyResponse buyResponse = buyProcess(itemId);
-                    view.buyResult(buyResponse);
+                    int itemId = readNumber();
+                    if (itemId != -1) {
+                        BuyResponse buyResponse = buyProcess(itemId);
+                        view.buyResult(buyResponse);
+                    }
                     break;
                 case 3:
                     if (player.getInventory().isEmpty()) {
@@ -58,34 +60,41 @@ public class ShopController {
                     } else {
                         PlayerView playerView = new PlayerView(System.out);
                         playerView.playerInventoryToSell(player);
-                        int itemIdToSell = Integer.parseInt(sc.nextLine());
+                        int itemIdToSell = readNumber();
+                        if (itemIdToSell != -1) {
                         int realItemPosition = itemIdToSell-1;
                         if (realItemPosition < 0 || realItemPosition >= player.getInventory().size()){
                             message.showMessage("Error. Id introducido inválido");
                         } else {
                             sellProcess(player.getInventory().get(realItemPosition));
                         }
+                        }
+                        
 
                     }
 
                     break;
                 case 4:
                     message.showMessage("Qué tipo de incursión quieres realizar?\n 1. Incursión de conquista.\n 2. Incursión de saqueo.\n 3. Incursión menor");
-                    int option = Integer.parseInt(sc.nextLine());
-                    if (option > 3 || option < 1){
-                        message.showMessage("Opción inválida");
-                    } else {
-                        doIncursion(option);
+                    int option = readNumber();
+                    if (option != -1) {
+                        if (option > 3 || option < 1){
+                            message.showMessage("Opción inválida");
+                        } else {
+                            doIncursion(option);
+                        }
                     }
 
                     break;
                 case 5: 
                     quests.showAvailableQuests();
-                    int option2 = sc.nextInt();
-                    if (option2 < 1 || option2 > quests.getQuests().size()){
-                        message.showMessage("Opción inválida");
-                    } else {
-                        doQuest(option2, quests);
+                    int option2 = readNumber();
+                    if (option2 != -1) {
+                        if (option2 < 1 || option2 > quests.getQuests().size()){
+                            message.showMessage("Opción inválida");
+                        } else {
+                            doQuest(option2, quests);
+                        }
                     }
                     break;
                 case 0:
@@ -152,5 +161,17 @@ public class ShopController {
         ;
     }
 
+    private int readNumber() {
+        int number = 0;
+        try {
+            number = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            MessageView message = new MessageView(System.out, 10);
+            message.showMessage("Error: ¡Debes introducir un número válido, no caracteres o letras!");
+            number = -1;
+        }
+
+        return number;
+    }
     
 }
