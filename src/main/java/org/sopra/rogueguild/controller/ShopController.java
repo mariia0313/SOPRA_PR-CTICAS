@@ -29,7 +29,7 @@ public class ShopController {
         this.sc = new Scanner(System.in);
     }
     
-    public void start() {
+    public void start() throws Exception {
         Quests quests = new Quests();
         quests.createInitialQuests();
         WorldEventGenerator worldEventGenerator = new WorldEventGenerator();
@@ -119,7 +119,8 @@ public class ShopController {
         return BuyResponse.success(item);
     }
 
-    private void sellProcess(Item item) {
+    private void sellProcess(Item item) throws Exception {
+        MessageView message = new MessageView(System.out, 10);
         player.removeItem(item);
 
         int nextShopId = repository.getAllStock().keySet().stream()
@@ -130,12 +131,16 @@ public class ShopController {
         double rawSellPrice = item.getBasePrice() * 0.80;
         int goldRecieved = (int) (Math.round(rawSellPrice / 5.0) * 5);
 
-        player.addGold(goldRecieved);
+        try {
+            player.addGold(goldRecieved);
+        } catch (Exception e){
+            message.showMessage(e.getMessage());
+        }
 
-        System.out.println("Has vendido " + item.getName() + " por " + goldRecieved + " monedas.");
+        message.showMessage("Has vendido " + item.getName() + " por " + goldRecieved + " monedas.");
     }
 
-    private void doIncursion(int opt){
+    private void doIncursion(int opt) throws Exception{
         Incursion incursion = new Incursion(opt, player);
         MessageView message = new MessageView(System.out, 10);
         message.showMessage(incursion.getDescription());
@@ -143,14 +148,22 @@ public class ShopController {
         repository.loadInitialStock();
     }
 
-    private void doQuest(int opt, Quests quests){
+    private void doQuest(int opt, Quests quests) throws Exception{
         MessageView message = new MessageView(System.out, 10);
         Quest quest = quests.getQuests().get(opt - 1);
         if (quest.checkRequirement(player) == true) {
-            player.addGold(quest.getGoldReward());
-            quest.completeQuest();
-            message.showMessage("La misión ha sido completada con éxito. Has ganado " + quest.getGoldReward() + " de oro.");
-        } else {
+            int oldGold = player.getGold(); // Guardamos el oro actual ANTES de añadir el nuevo
+            int goldReward = quest.getGoldReward();
+            try {
+                player.addGold(goldReward);
+                quest.completeQuest();
+                message.showMessage("La misión ha sido completada con éxito. Has ganado " + goldReward + " de oro.");
+            } catch (Exception e){
+                int realReceivedGold = 500 - oldGold;
+                quest.completeQuest();
+                message.showMessage("La misión ha sido completada. Solo pudiste reclamar " + realReceivedGold + " de oro debido al límite.");
+            } 
+            } else {
             String requirements = "No se cumplen con los requisitos requeridos para completar la misión";
             for (ItemCategory category : quest.requirementsLeft(player)) {
                requirements += "\nNecesitas un objeto de categoría " + category.name(); 
@@ -158,8 +171,7 @@ public class ShopController {
 
             message.showMessage(requirements);
         }
-        ;
-    }
+        }
 
     private int readNumber() {
         int number = 0;

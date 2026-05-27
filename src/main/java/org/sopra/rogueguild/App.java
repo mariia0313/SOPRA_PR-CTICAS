@@ -6,7 +6,7 @@ import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.view.ViewDisplay;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         ShopRepository repository = new ShopRepository();
         ViewDisplay view = new ViewDisplay();
 
