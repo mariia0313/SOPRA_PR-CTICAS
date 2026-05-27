@@ -2,6 +2,8 @@ package org.sopra.rogueguild.repository.model;
 
 import java.util.Random;
 
+import org.sopra.rogueguild.view.components.MessageView;
+
 
 public class Incursion {
 
@@ -10,7 +12,7 @@ public class Incursion {
     private int goldReward;
     private Item itemReward;
 
-    public Incursion(int option, Player player){
+    public Incursion(int option, Player player) throws Exception{
         switch (option) {
             case 1:
                 createIncursionMajorItem(player);
@@ -29,17 +31,21 @@ public class Incursion {
         }
     }
 
-    public void createIncursionGoldReward(Player player){
+    public void createIncursionGoldReward(Player player) throws Exception{
+        MessageView message = new MessageView(System.out, 10);
         this.shortName = "Incursión de saqueo";
         this.itemReward = null;
         Random random = new Random();
         int rawGold = 101 + random.nextInt(100);
         this.goldReward = (int) (Math.round(rawGold / 5.0) * 5);
         int oldGold = player.getGold();
-        if (player.addGold(goldReward) == true){
-            this.description = "Has obtenido " + (500-oldGold) + " de oro";
-        } else {
+
+        try {
+            player.addGold(this.goldReward);
             this.description = "Has obtenido " + this.goldReward + " de oro";
+        } catch (Exception e) {
+            int realRecievedOre = 500 - oldGold;
+            this.description = "Has obtenido " + realRecievedOre + " de oro (Límite alcanzado)";
         }
     }
 
@@ -52,7 +58,7 @@ public class Incursion {
         player.addItem(itemReward);
     }
     
-    public void createIncursionMinorItemWithGold(Player player){
+    public void createIncursionMinorItemWithGold(Player player) throws Exception{
         this.shortName = "Incursión menor";
         ItemGenerator itemGenerator = new ItemGenerator();
         Item item = itemGenerator.createRandomItem();
@@ -63,10 +69,13 @@ public class Incursion {
         this.goldReward = (int) (Math.round(rawGold / 5.0) * 5);
         this.itemReward = item;
         int oldGold = player.getGold();
-        if (player.addGold(goldReward) == true){
-            this.description = "Has obtenido " + (500-oldGold) + " de oro y el objeto " + this.itemReward.getName();;
-        } else {
-            this.description = "Has obtenido " + this.goldReward + " de oro y el objeto " + this.itemReward.getName();;
+
+        try {
+            player.addGold(goldReward);
+            this.description = "Has obtenido " + this.goldReward + " de oro";
+        } catch (Exception e){
+            int realRecievedOre = 500 - oldGold;
+            this.description = "Has obtenido " + realRecievedOre + " de oro (Límite alcanzado)";
         }
 
         player.addItem(itemReward);

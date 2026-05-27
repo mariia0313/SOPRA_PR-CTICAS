@@ -42,16 +42,17 @@ public class Player {
         return inventory;
     }
 
-    public boolean addGold(int gold){
+    public boolean addGold(int gold) throws Exception{
         this.gold += gold;
         return goldLimit();
     }
 
-    public boolean goldLimit(){
+    public boolean goldLimit() throws Exception{
         boolean isPastLimit = false;
         if (this.gold > 500) {
             this.gold = 500;
             isPastLimit = true;
+            throw new Exception("Has alcanzado el límite de oro");
         }
 
         return isPastLimit;
