@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 import org.sopra.rogueguild.controller.dto.BuyResponse;
 import org.sopra.rogueguild.repository.ShopRepository;
+import org.sopra.rogueguild.repository.model.Armor;
+import org.sopra.rogueguild.repository.model.Boots;
+import org.sopra.rogueguild.repository.model.Helmet;
 import org.sopra.rogueguild.repository.model.Incursion;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.ItemCategory;
@@ -98,6 +101,30 @@ public class ShopController {
                             doQuest(option2, quests);
                         }
                     }
+                    break;
+                case 6:
+                    message.showMessage(player.showInventory());
+                    int option3 = readNumber();
+                    if (option3 != -1) {
+                        message.showMessage(equipItem(player.getInventory().get(option3-1)));
+                    }
+                    
+                    break;
+                
+                case 7:
+                    message.showMessage(showEquippedItems());
+                        int option4 = readNumber();
+                        if (option4 != -1){
+                            if (option4 >= 0 && option4 > player.getItemEquipped().size()) {
+                                Item item = player.getItemEquipped().get(option4-1);
+                                message.showMessage(unequipItem(item));
+                            } else {
+                                message.showMessage("Opción no válida");
+                            }
+                        }
+                    break;
+                case 8:
+                    message.showMessage(showEquippedItems());
                     break;
                 case 0:
                     view.quitMessage();
@@ -196,11 +223,11 @@ public class ShopController {
         String result = "";
         switch (item.getItemCategory()) {
             case WEAPON:
-                if (itemEquipped.get(0).getName().isBlank()) {
+                if (itemEquipped.get(0).getName() == null) {
                 itemEquipped.set(0, item);
                 player.removeItem(item);
                 result = "Arma equipada en la primera ranura.";
-            } else if (itemEquipped.get(1).getName().isBlank()) {
+            } else if (itemEquipped.get(1).getName() == null) {
                 itemEquipped.set(1, item);
                 player.removeItem(item);
                 result = "Arma equipada en la segunda ranura.";
@@ -225,14 +252,18 @@ public class ShopController {
             }
                 break;
             case BOOTS:
-                if(itemEquipped.get(3).getName().isBlank()){
+                if(itemEquipped.get(3).getName() == null){
                     itemEquipped.set(3, item);
+                    player.removeItem(item);
+                    result = "El item se ha equipado correctamente";
                 }else{
                     message.showMessage("Ya tienes un item de este tipo equipado. Desea remplazarlo? (Si: 1,  No: 2)  \nItem actual: " + itemEquipped.get(3).toString());
                     option = readNumber();
                     if(option!=-1){
                         if(option == 1){
+                            player.addItem(player.getItemEquipped().get(3));
                             itemEquipped.set(3, item);
+                            player.removeItem(item);
                             result = "El item se ha equipado correctamente";
                         }else{
                             result = "El item no se ha equipado";
@@ -241,14 +272,18 @@ public class ShopController {
                 }
                 break;
             case ARMOR:
-                if(itemEquipped.get(2).getName().isBlank()){
+                if(itemEquipped.get(2).getName() == null){
                     itemEquipped.set(2, item);
+                    player.removeItem(item);
+                    result = "El item se ha equipado correctamente";
                 }else{
                     message.showMessage("Ya tienes un item de este tipo equipado. Desea remplazarlo? (Si: 1,  No: 2)  \nItem actual: " + itemEquipped.get(2).toString());
                     option = readNumber();
                     if(option!=-1){
                         if(option == 1){
+                            player.addItem(player.getItemEquipped().get(2));
                             itemEquipped.set(2, item);
+                            player.removeItem(item);
                             result = "El item se ha equipado correctamente";
                         }else{
                             result = "El item no se ha equipado";
@@ -257,14 +292,18 @@ public class ShopController {
                 }
                 break;
             case HELMET:
-                if(itemEquipped.get(4).getName().isBlank()){
+                if(itemEquipped.get(4).getName() == null){
                     itemEquipped.set(4, item);
+                    player.removeItem(item);
+                    result = "El item se ha equipado correctamente";
                 }else{
                     message.showMessage("Ya tienes un item de este tipo equipado. Desea remplazarlo? (Si: 1,  No: 2)  \nItem actual: " + itemEquipped.get(4).toString());
                     option = readNumber();
                     if(option!=-1){
                         if(option == 1){
+                            player.addItem(player.getItemEquipped().get(4));
                             itemEquipped.set(4, item);
+                            player.removeItem(item);
                             result = "El item se ha equipado correctamente";
                         }else{
                             result = "El item no se ha equipado";
@@ -278,5 +317,61 @@ public class ShopController {
         return result;
     }
 
+    public String unequipItem(Item item) {
+                MessageView message = new MessageView(System.out, 10);
+                int option = 0;
+                ArrayList<Item> itemEquipped = player.getItemEquipped();
+                String result = "";
+                switch (item.getItemCategory()) {
+                case WEAPON:
+                    if (itemEquipped.get(0).getName().equals(item.getName())) { 
+                    player.addItem(itemEquipped.get(0));     
+                    itemEquipped.set(0, new Weapon(null, 0, 0));
+                    result = "Has desequipado el arma " + item.getName() + " de la primera ranura.";
+                    
+                } else if (itemEquipped.get(1).getName().equals(item.getName())) {
+                    player.addItem(itemEquipped.get(1)); 
+                    itemEquipped.set(1, new Weapon(null, 0, 0));
+                    player.addItem(item);
+                    result = "Has desequipado el arma " + item.getName() + " de la segunda ranura.";
+                    
+                } else {
+                    result = "Esa arma no la tienes equipada.";
+                }
+                    break;
+                case BOOTS:
+                    player.addItem(player.getItemEquipped().get(3));
+                    itemEquipped.set(3, new Boots(null, 0, 0));
+                    break;
+                case ARMOR:
+                    player.addItem(player.getItemEquipped().get(2));
+                    itemEquipped.set(2, new Armor(null, 0, 0));
+                    break;
+                case HELMET:
+                    player.addItem(player.getItemEquipped().get(4));
+                    itemEquipped.set(4, new Helmet(null, 0, 0));
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        return result;
+}
+
+public String showEquippedItems(){
+    String itemsEquipped = "";
+    int quantityItems = 0;
+    for (int i = 0; i < player.getItemEquipped().size(); i++) {
+        if (player.getItemEquipped().get(i).getName() != null) {
+            itemsEquipped += "| " + (i+1) + " " + player.getItemEquipped().get(i).toString() + "\n";
+            quantityItems++;
+        }
+    }
+
+    if (quantityItems == 0) {
+        itemsEquipped = "No tienes items equipados.";
+    }
+
+    return itemsEquipped;
+}
     
 }

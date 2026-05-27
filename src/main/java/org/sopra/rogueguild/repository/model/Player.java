@@ -11,16 +11,16 @@ public class Player {
     public Player(String name, int gold) {
         this.name = name;
         this.gold = gold;
-        ItemEquipped();
+        equipItems();
 
     }
 
-    public void ItemEquipped(){
-        Item itemWeapon = new Weapon(name, gold, gold);
-        Item itemWeapon2 = new Weapon(name, gold, gold);
-        Item itemArmor = new Armor(name, gold, gold);
-        Item itemBoots = new Boots(name, gold, gold);
-        Item itemHelmet = new Helmet(name, gold, gold);
+    public void equipItems(){
+        Item itemWeapon = new Weapon(null, gold, gold);
+        Item itemWeapon2 = new Weapon(null, gold, gold);
+        Item itemArmor = new Armor(null, gold, gold);
+        Item itemBoots = new Boots(null, gold, gold);
+        Item itemHelmet = new Helmet(null, gold, gold);
         ItemEquipped.add(itemWeapon);
         ItemEquipped.add(itemWeapon2);
         ItemEquipped.add(itemArmor);
