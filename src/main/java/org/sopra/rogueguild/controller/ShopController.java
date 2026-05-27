@@ -1,5 +1,6 @@
 package org.sopra.rogueguild.controller;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.sopra.rogueguild.controller.dto.BuyResponse;
@@ -10,6 +11,7 @@ import org.sopra.rogueguild.repository.model.ItemCategory;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.repository.model.Quest;
 import org.sopra.rogueguild.repository.model.Quests;
+import org.sopra.rogueguild.repository.model.Weapon;
 import org.sopra.rogueguild.repository.model.WorldEvent;
 import org.sopra.rogueguild.repository.model.WorldEventGenerator;
 import org.sopra.rogueguild.view.ViewDisplay;
@@ -185,5 +187,96 @@ public class ShopController {
 
         return number;
     }
+
+
+    public String equipItem(Item item){
+        MessageView message = new MessageView(System.out, 10);
+        int option = 0;
+        ArrayList<Item> itemEquipped = player.getItemEquipped();
+        String result = "";
+        switch (item.getItemCategory()) {
+            case WEAPON:
+                if (itemEquipped.get(0).getName().isBlank()) {
+                itemEquipped.set(0, item);
+                player.removeItem(item);
+                result = "Arma equipada en la primera ranura.";
+            } else if (itemEquipped.get(1).getName().isBlank()) {
+                itemEquipped.set(1, item);
+                player.removeItem(item);
+                result = "Arma equipada en la segunda ranura.";
+            } else {
+
+                int damage0 = ((Weapon) itemEquipped.get(0)).getDamage();
+                int damage1 = ((Weapon) itemEquipped.get(1)).getDamage();
+
+                int slotToReplace = 0;
+                if (damage1 < damage0) {
+                    slotToReplace = 1;
+                }
+
+                Item oldWeapon = itemEquipped.get(slotToReplace);
+                
+                
+                itemEquipped.set(slotToReplace, item);
+                player.removeItem(item);
+                player.addItem(oldWeapon);
+                
+                result = "Ranuras llenas. Se reemplazó el arma " + oldWeapon.getName() + " (Menor daño/Primera) y volvió a tu inventario.";
+            }
+                break;
+            case BOOTS:
+                if(itemEquipped.get(3).getName().isBlank()){
+                    itemEquipped.set(3, item);
+                }else{
+                    message.showMessage("Ya tienes un item de este tipo equipado. Desea remplazarlo? (Si: 1,  No: 2)  \nItem actual: " + itemEquipped.get(3).toString());
+                    option = readNumber();
+                    if(option!=-1){
+                        if(option == 1){
+                            itemEquipped.set(3, item);
+                            result = "El item se ha equipado correctamente";
+                        }else{
+                            result = "El item no se ha equipado";
+                        }
+                    }
+                }
+                break;
+            case ARMOR:
+                if(itemEquipped.get(2).getName().isBlank()){
+                    itemEquipped.set(2, item);
+                }else{
+                    message.showMessage("Ya tienes un item de este tipo equipado. Desea remplazarlo? (Si: 1,  No: 2)  \nItem actual: " + itemEquipped.get(2).toString());
+                    option = readNumber();
+                    if(option!=-1){
+                        if(option == 1){
+                            itemEquipped.set(2, item);
+                            result = "El item se ha equipado correctamente";
+                        }else{
+                            result = "El item no se ha equipado";
+                        }
+                    }
+                }
+                break;
+            case HELMET:
+                if(itemEquipped.get(4).getName().isBlank()){
+                    itemEquipped.set(4, item);
+                }else{
+                    message.showMessage("Ya tienes un item de este tipo equipado. Desea remplazarlo? (Si: 1,  No: 2)  \nItem actual: " + itemEquipped.get(4).toString());
+                    option = readNumber();
+                    if(option!=-1){
+                        if(option == 1){
+                            itemEquipped.set(4, item);
+                            result = "El item se ha equipado correctamente";
+                        }else{
+                            result = "El item no se ha equipado";
+                        }
+                    }
+                }
+                break;
+            default:
+                throw new AssertionError();
+        }
+        return result;
+    }
+
     
 }

@@ -6,10 +6,26 @@ public class Player {
     private int gold;
     private List<Item> inventory = new ArrayList<>();
     private ArrayList<Quest> quests = new ArrayList<>();
+    private ArrayList<Item> ItemEquipped = new ArrayList<>();
 
     public Player(String name, int gold) {
         this.name = name;
         this.gold = gold;
+        ItemEquipped();
+
+    }
+
+    public void ItemEquipped(){
+        Item itemWeapon = new Weapon(name, gold, gold);
+        Item itemWeapon2 = new Weapon(name, gold, gold);
+        Item itemArmor = new Armor(name, gold, gold);
+        Item itemBoots = new Boots(name, gold, gold);
+        Item itemHelmet = new Helmet(name, gold, gold);
+        ItemEquipped.add(itemWeapon);
+        ItemEquipped.add(itemWeapon2);
+        ItemEquipped.add(itemArmor);
+        ItemEquipped.add(itemBoots);
+        ItemEquipped.add(itemHelmet);
     }
 
     public String getName() { return name; }
@@ -57,5 +73,10 @@ public class Player {
 
         return isPastLimit;
     }
+
+    public ArrayList<Item> getItemEquipped(){
+        return this.ItemEquipped;
+    }
+
 }
 

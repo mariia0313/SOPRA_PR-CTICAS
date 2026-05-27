@@ -12,4 +12,8 @@ public class Weapon extends Item {
     public String toString(){
         return getName() + " (" + getPrice() + " oro) | Daño: " + damage;
     }
+
+    public int getDamage(){
+        return this.damage;
+    }
 }
