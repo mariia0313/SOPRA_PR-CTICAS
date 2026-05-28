@@ -5,6 +5,7 @@ public abstract class Item {
     private int price;
     private ItemCategory category;
     private final int basePrice;
+    private int id;
 
     public Item(String name, int price, ItemCategory category) {
         this.name = name;
@@ -26,4 +27,8 @@ public abstract class Item {
     public void setPrice(int price) { this.price = price; }
 
     public String toString() { return name + " (" + price + " oro)"; }
+
+    public void setId(int id) { this.id = id; }
+
+    public int getId(){ return this.id; }
 }

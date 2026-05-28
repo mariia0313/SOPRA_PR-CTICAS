@@ -47,8 +47,8 @@ public class Player {
 
     public String showInventory(){
         String items = "";
-        for (Item item : inventory){
-            items += item.toString() + "\n ";
+        for (int i = 0; i < inventory.size(); i++){
+            items += (i+1) + ". " + inventory.get(i).toString() + "\n ";
         }
 
         return items;
