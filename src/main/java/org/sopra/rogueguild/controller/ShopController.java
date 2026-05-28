@@ -14,6 +14,7 @@ import org.sopra.rogueguild.repository.model.ItemCategory;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.repository.model.Quest;
 import org.sopra.rogueguild.repository.model.Quests;
+import org.sopra.rogueguild.repository.model.StatQuest;
 import org.sopra.rogueguild.repository.model.Weapon;
 import org.sopra.rogueguild.repository.model.WorldEvent;
 import org.sopra.rogueguild.repository.model.WorldEventGenerator;
@@ -193,10 +194,16 @@ public class ShopController {
                 message.showMessage("La misión ha sido completada. Solo pudiste reclamar " + realReceivedGold + " de oro debido al límite.");
             } 
             } else {
-            String requirements = "No se cumplen con los requisitos requeridos para completar la misión";
-            for (ItemCategory category : quest.requirementsLeft(player)) {
-               requirements += "\nNecesitas un objeto de categoría " + category.name(); 
-            }
+                String requirements = "No se cumplen con los requisitos requeridos para completar la misión";
+                if (!quest.hasRequiredItems()) {
+                    requirements += "\n" + ((StatQuest) quest).requirementsLeftStatQuest(player);
+                } else {
+                    if (quest.requirementsLeft(player).isEmpty()) {
+                    for (ItemCategory category : quest.requirementsLeft(player)) {
+                       requirements += "\nNecesitas un objeto de categoría " + category.name(); 
+                    }
+                    }
+                }
 
             message.showMessage(requirements);
         }

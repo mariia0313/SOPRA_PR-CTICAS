@@ -23,19 +23,31 @@ public class Quest {
         boolean questRequirements = false;
         boolean isMatched = false;
         int itemsMatched = 0;
-        for(ItemCategory category : this.requiredItems){
-            isMatched = false;
+        if (this.requiredItems != null) {
+            for(ItemCategory category : this.requiredItems){
+                isMatched = false;
                 for (Item item : player.getInventory()) {
-                if(item.getItemCategory().equals(category) && !isMatched ){
-                    isMatched = true;
-                    itemsMatched++;
+                    if(item.getItemCategory().equals(category) && !isMatched ){
+                        isMatched = true;
+                        itemsMatched++;
+                    }
                 }
             }
+            if(itemsMatched == requiredItems.size()){
+                questRequirements = true;
+            }
         }
-        if(itemsMatched == requiredItems.size()){
-            questRequirements = true;
-        }
+        
         return questRequirements;
+    }
+
+    public boolean hasRequiredItems(){
+        boolean result = false;
+        if (requiredItems != null){
+            result = true;
+        }
+
+        return result;
     }
 
     public void completeQuest(){
