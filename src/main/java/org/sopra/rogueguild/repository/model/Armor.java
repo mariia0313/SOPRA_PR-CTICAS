@@ -13,4 +13,8 @@ public class Armor extends Item {
         return getName() + " (" + getPrice() + " oro) | Escudo: " + shield;
     }
 
+  public int getShield(){
+    return this.shield;
+  }
+
 }

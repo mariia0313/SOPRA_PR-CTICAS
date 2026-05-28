@@ -14,4 +14,8 @@ public class Helmet extends Item {
     public String toString(){
         return getName() + " (" + getPrice() + " oro) | Defensa: " + defense;
     }
+
+    public int getDefense(){
+        return defense;
+    }
 }

@@ -41,7 +41,11 @@ public class Quests {
         ArrayList<ItemCategory> requiredItems2 = new ArrayList<>(List.of(ItemCategory.WEAPON, ItemCategory.HELMET, ItemCategory.ARMOR, ItemCategory.BOOTS));
         Quest CaballeroDelFenix = new Quest("Caballero del Fénix", 100, requiredItems2);
         createdQuests.add(CaballeroDelFenix);
-    }
 
+        StatQuest baluarteInquebrantable = new StatQuest("Baluarte Inquebrantable", 150, 50, 0);
+        createdQuests.add(baluarteInquebrantable);
+        StatQuest maestroFilo = new StatQuest("Maestro del Filo", 200, 0, 80);
+        createdQuests.add(maestroFilo);
+    }
 
 }
