@@ -65,7 +65,7 @@ public class StatQuest extends Quest {
             result = "Te faltan " + (requiredDamage - totalAttack) + " de ataque para cumplir con los requisitos";
         }
 
-        if (requiredArmor != 0 && totalArmor >= requiredArmor) {
+        if (requiredArmor != 0 && totalArmor < requiredArmor) {
             result = "Te faltan " + (requiredArmor - totalArmor) + " de armadura para cumplir con los requisitos";
         }
 
