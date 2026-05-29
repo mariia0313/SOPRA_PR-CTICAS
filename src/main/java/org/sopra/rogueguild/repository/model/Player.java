@@ -48,7 +48,7 @@ public class Player {
     public String showInventory(){
         String items = "";
         for (int i = 0; i < inventory.size(); i++){
-            items += (i+1) + ". " + inventory.get(i).toString() + "\n ";
+            items += "\n       | ░ " + (i+1) + ". " + inventory.get(i).toString();
         }
 
         return items;
@@ -76,6 +76,10 @@ public class Player {
 
     public ArrayList<Item> getItemEquipped(){
         return this.ItemEquipped;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
 }

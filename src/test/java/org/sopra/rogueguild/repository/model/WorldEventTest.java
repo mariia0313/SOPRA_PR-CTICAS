@@ -26,10 +26,8 @@ public class WorldEventTest{
         double precioPreRedondeo;
 
         if (worldEvent.getDiscountOrPriceRise() == 0) {
-            // Descuento
             precioPreRedondeo = precioBase - (precioBase * factor);
         } else {
-            // Subida
             precioPreRedondeo = precioBase + (precioBase * factor);
         }
 

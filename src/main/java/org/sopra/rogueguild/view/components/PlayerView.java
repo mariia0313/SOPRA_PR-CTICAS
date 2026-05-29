@@ -28,7 +28,7 @@ public class PlayerView {
         out.println("    |                 " + ("INVENTARIO JUGADOR") + "    |");
         out.println("    +--+------------------------------------------------+");
         for (int i = 0; i < player.getInventory().size(); i++){
-            out.println("   | ITEM: " + player.getInventory().get(i).getName() + " | ID: " + (i+1));
+            out.println("   |  " + (i+1) + ". " + player.getInventory().get(i).getName());
         }
     }
 }
