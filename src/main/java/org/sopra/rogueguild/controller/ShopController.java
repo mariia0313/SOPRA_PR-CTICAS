@@ -52,9 +52,15 @@ public class ShopController {
         WorldEvent worldEvent = worldEventGenerator.generateRandomWorldEventer(repository);
         MessageView message = new MessageView(System.out, 10);
         int opt;
+
+        message.showMessage("¡Bienvenido a ROGUE GUILD! ¿Cúal es tu nombre?"); 
+        String name = sc.nextLine();
+        player.setName(name);
+
         do {
             view.landingPage();
             view.playerStatus(player);
+            System.out.print("| Introduzca el número de la acción a realizar: ");
             opt = readNumber();
             switch (opt) {
                 case 1:
@@ -64,7 +70,9 @@ public class ShopController {
                 case 2:
                     message.showMessage(worldEvent.getEventDesription());
                     view.displayStock(repository.getAllStock(), true);
+                    System.out.print("| Introduzca el número del arma a comprar: ");
                     int itemId = readNumber();
+                    
                     if (itemId != -1) {
                         BuyResponse buyResponse = buyProcess(itemId);
                         view.buyResult(buyResponse);
@@ -76,6 +84,7 @@ public class ShopController {
                     } else {
                         PlayerView playerView = new PlayerView(System.out);
                         playerView.playerInventoryToSell(player);
+                        System.out.print("| Introduzca el número del item a vender: ");
                         int itemIdToSell = readNumber();
                         if (itemIdToSell != -1) {
                         int realItemPosition = itemIdToSell-1;
@@ -85,13 +94,13 @@ public class ShopController {
                             sellProcess(player.getInventory().get(realItemPosition));
                         }
                         }
-                        
 
                     }
 
                     break;
                 case 4:
                     message.showMessage("Qué tipo de incursión quieres realizar?\n 1. Incursión de conquista.\n 2. Incursión de saqueo.\n 3. Incursión menor");
+                    System.out.print("| Introduzca el número de la incursión a realizar: ");
                     int option = readNumber();
                     if (option != -1) {
                         if (option > 3 || option < 1){
@@ -104,6 +113,7 @@ public class ShopController {
                     break;
                 case 5: 
                     quests.showAvailableQuests();
+                    System.out.print("| Introduzca el número de la misión a realizar: ");
                     int option2 = readNumber();
                     if (option2 != -1) {
                         if (option2 < 1 || option2 > quests.getQuests().size()){
@@ -115,6 +125,7 @@ public class ShopController {
                     break;
                 case 6:
                     message.showMessage(player.showInventory());
+                    System.out.print("| Introduzca el número del item a equipar: ");
                     int option3 = readNumber();
                     if (option3 != -1) {
                         if (option3 < 1 || option3 > quests.getQuests().size()){
@@ -135,6 +146,7 @@ public class ShopController {
                         }
                     }
 
+                    System.out.print("| Introduzca el número del item a desequipar: ");
                     int option4 = readNumber();
                     if (option4 != -1) {
                         if (option4 > 0 && option4 <= visibleItems.size()) {
