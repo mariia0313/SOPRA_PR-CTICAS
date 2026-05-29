@@ -1,5 +1,15 @@
 package org.sopra.rogueguild.view.utils;
 
+/**
+ * Utilidad para aplicar colores ANSI a texto de consola.
+ *
+ * Proporciona constantes de color y el método {@link #c(String, String)}
+ * para envolver texto con códigos de escape. El coloreado puede desactivarse
+ * globalmente mediante {@link #enabled}.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public final class Ansi {
     public static boolean enabled = true;
 

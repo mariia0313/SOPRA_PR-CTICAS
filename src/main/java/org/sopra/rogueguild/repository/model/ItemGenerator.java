@@ -3,10 +3,25 @@ package org.sopra.rogueguild.repository.model;
 import java.util.HashSet;
 import java.util.Random;
 
+/**
+ * Genera items aleatorios para poblar el stock de la tienda.
+ *
+ * Combina prefijos por categoría con sufijos temáticos para crear nombres únicos,
+ * y calcula el precio final en función del valor del atributo del item.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class ItemGenerator {
     
     private final Random random;
     private HashSet<String> generatedItems = new HashSet<String>(); 
+    private final String[] suffixes = { 
+        "de fuego", "de hielo", "del rayo", "de la tormenta", "de la sombra", "de la luz", 
+        "de hierro", "de plata", "de obsidiana", "de acero rúnico", "de bronce antiguo",  
+        "del dragón", "del fénix", "del caos", "del vacío", "del alba", "de la luna", 
+        "del norte", "de las ruinas", "del bosque maldito", "de las profundidades", "de la montaña" 
+    };
     
 
     public ItemGenerator(){
@@ -21,6 +36,11 @@ public class ItemGenerator {
         boolean isUnique = false;
         String name = "";
         int trys = 0;
+        int maxPrice = 0;
+        int minPrice = 0;
+        int atributteValue = 0;
+        int finalPrice = 0;
+        Item item = null;
 
         int probability = random.nextInt(100) + 1; 
         
@@ -47,11 +67,6 @@ public class ItemGenerator {
             trys++;
         }
 
-        int maxPrice = 0;
-        int minPrice = 0;
-        int atributteValue = 0;
-        int finalPrice = 0;
-        Item item = null;
 
         switch (selectedCategory) {
             case POTION:
@@ -110,11 +125,5 @@ public class ItemGenerator {
         return finalPrice;
     }
 
-    private final String[] suffixes = { 
-        "de fuego", "de hielo", "del rayo", "de la tormenta", "de la sombra", "de la luz", 
-        "de hierro", "de plata", "de obsidiana", "de acero rúnico", "de bronce antiguo",  
-        "del dragón", "del fénix", "del caos", "del vacío", "del alba", "de la luna", 
-        "del norte", "de las ruinas", "del bosque maldito", "de las profundidades", "de la montaña" 
-    };
 
 }

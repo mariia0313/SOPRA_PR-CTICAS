@@ -1,6 +1,20 @@
 package org.sopra.rogueguild.repository.model;
+
+/**
+ * Genera un evento de mundo aleatorio al inicio de cada sesión de tienda.
+ *
+ * Selecciona aleatoriamente una categoría de items, un porcentaje y si el efecto
+ * es descuento o subida de precio, y aplica los cambios al stock del repositorio.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
+
+
+
 import java.util.Map;
 import java.util.Random;
+
 import org.sopra.rogueguild.repository.ShopRepository;
 
 public class WorldEventGenerator{
@@ -13,7 +27,12 @@ public class WorldEventGenerator{
 
     public WorldEvent generateRandomWorldEventer(ShopRepository shopRepository){
         int targetItem = random.nextInt(6);
+        Map<Integer, Item> stock = shopRepository.getAllStock();
         String target = "";
+        int percentage = random.nextInt(21) * 5;
+        int discountOrPriceRise = random.nextInt(2);
+        double rawPrice = 0;
+        int finalPrice = 0;
         
         switch(targetItem){
             case 0:
@@ -36,13 +55,8 @@ public class WorldEventGenerator{
             break;
         }
 
-        int percentage = random.nextInt(21) * 5;
-        int discountOrPriceRise = random.nextInt(2);
         WorldEvent worldEvent = new WorldEvent(target, discountOrPriceRise, percentage);
-        double rawPrice = 0;
-        int finalPrice = 0;
-        
-        Map<Integer, Item> stock = shopRepository.getAllStock();
+
         for (Item item : stock.values()) {
             if (target.equals("TODOS") || item.getItemCategory().name().equals(target)) {
                 double factor = percentage / 100.0;

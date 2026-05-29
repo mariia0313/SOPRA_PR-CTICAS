@@ -1,5 +1,13 @@
 package org.sopra.rogueguild.repository.model;
 
+/**
+ * Representa unas botas equipables por el jugador.
+ *
+ * Hereda de Item añadiendo el atributo de agilidad.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class Boots extends Item {
 
     private int agility;

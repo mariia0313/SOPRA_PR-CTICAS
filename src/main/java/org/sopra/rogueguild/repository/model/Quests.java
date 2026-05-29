@@ -5,6 +5,15 @@ import java.util.List;
 
 import org.sopra.rogueguild.view.components.MessageView;
 
+/**
+ * Colección de misiones disponibles en el juego.
+ *
+ * Gestiona la lista de misiones creadas, permite añadir nuevas y muestra
+ * por consola las misiones aún no completadas.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class Quests {
 
     private ArrayList<Quest> createdQuests;

@@ -2,6 +2,14 @@ package org.sopra.rogueguild.controller.dto;
 
 import org.sopra.rogueguild.repository.model.Item;
 
+/**
+ * Encapsula el resultado de un intento de compra.
+ *
+ * Utiliza el  ENUN status según el resultado: éxito, item no encontrado u oro insuficiente.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class BuyResponse {
     public enum Status { SUCCESS, NOT_FOUND, NOT_ENOUGH_GOLD }
 

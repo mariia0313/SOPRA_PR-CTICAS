@@ -1,13 +1,19 @@
 package org.sopra.rogueguild.repository;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.sopra.rogueguild.repository.model.Armor;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.ItemGenerator;
-import org.sopra.rogueguild.repository.model.Weapon;
 
+/**
+ * Repositorio que gestiona el stock de items disponibles en la tienda.
+ *
+ * Almacena los items en un map por ID y proporciona operaciones
+ * de consulta, eliminación y recarga del inventario inicial.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class ShopRepository {
     private Map<Integer, Item> stock;
 

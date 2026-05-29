@@ -1,5 +1,14 @@
 package org.sopra.rogueguild.repository.model;
 
+/**
+ * Misión cuyo requisito de completado se basa en las estadísticas del jugador.
+ *
+ * Hereda de Quest comprobando el daño total de armas equipadas
+ * y la armadura total en lugar de items en el inventario.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class StatQuest extends Quest {
     private int requiredArmor;
     private int requiredDamage;

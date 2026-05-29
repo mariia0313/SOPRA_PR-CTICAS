@@ -1,5 +1,13 @@
 package org.sopra.rogueguild.repository.model;
 
+/**
+ * Representa una armadura equipable por el jugador.
+ *
+ * Hereda de Item añadiendo el atributo de escudo.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class Armor extends Item {
 
   private int shield;
