@@ -2,6 +2,15 @@ package org.sopra.rogueguild.repository.model;
 import org.sopra.rogueguild.view.components.MessageView;
 import java.util.ArrayList;
 
+/**
+ * Representa una misión que el jugador puede completar para obtener oro.
+ *
+ * Cada misión tiene una descripción, una recompensa en oro y una lista de
+ * categorías de items requeridas en el inventario del jugador para completarla.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class Quest {
 
     private static Quests quests = new Quests();

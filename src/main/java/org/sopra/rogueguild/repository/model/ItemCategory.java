@@ -2,6 +2,15 @@ package org.sopra.rogueguild.repository.model;
 
 import java.util.Random;
 
+/**
+ * Enumeración de las categorías de items disponibles en el juego.
+ *
+ * Cada categoría lleva asociado un conjunto de prefijos aleatorios
+ * utilizados por ItemGenerator para generar nombres de items.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public enum ItemCategory {
     WEAPON(new String[]{"Espada", "Hacha", "Daga", "Lanza", "Mandoble", "Arco", "Maza", "Bastón"}),
     ARMOR(new String[]{"Armadura", "Cota", "Peto", "Coraza", "Malla"}),

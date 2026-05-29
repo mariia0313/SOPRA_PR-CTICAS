@@ -5,6 +5,15 @@ import java.util.Map;
 
 import org.sopra.rogueguild.repository.model.Item;
 
+/**
+ * Componente de vista que renderiza el inventario de la tienda.
+ *
+ * Muestra los items disponibles ordenados por ID, con o sin número seleccionable
+ * según si el jugador está en proceso de compra.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class StockView {
     private final PrintStream out;
 

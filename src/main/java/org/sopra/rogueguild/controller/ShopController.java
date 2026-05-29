@@ -22,6 +22,16 @@ import org.sopra.rogueguild.view.ViewDisplay;
 import org.sopra.rogueguild.view.components.MessageView;
 import org.sopra.rogueguild.view.components.PlayerView;
 
+/**
+ * Controlador principal del flujo de la tienda.
+ *
+ * Coordina la interacción entre el jugador, el repositorio y la vista,
+ * gestionando las opciones del menú principal: compra, venta, equipamiento,
+ * incursiones y misiones.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class ShopController {
     private final Player player;
     private final ViewDisplay view;

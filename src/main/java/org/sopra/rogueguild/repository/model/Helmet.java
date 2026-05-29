@@ -1,7 +1,13 @@
 package org.sopra.rogueguild.repository.model;
 
-import java.security.PublicKey;
-
+/**
+ * Representa un casco equipable por el jugador.
+ *
+ * Hereda de Item añadiendo el atributo de defensa.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class Helmet extends Item {
 
     private int defense;

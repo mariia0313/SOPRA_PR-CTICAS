@@ -3,6 +3,15 @@ package org.sopra.rogueguild.repository.model;
 import java.util.HashSet;
 import java.util.Random;
 
+/**
+ * Genera items aleatorios para poblar el stock de la tienda.
+ *
+ * Combina prefijos por categoría con sufijos temáticos para crear nombres únicos,
+ * y calcula el precio final en función del valor del atributo del item.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class ItemGenerator {
     
     private final Random random;

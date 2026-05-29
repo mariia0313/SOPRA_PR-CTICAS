@@ -1,5 +1,14 @@
 package org.sopra.rogueguild.repository.model;
 
+/**
+ * Clase base abstracta para todos los items del juego.
+ *
+ * Define los atributos comunes como nombre, precio y categoría,
+ * y expone los métodos de acceso compartidos por todas las subclases.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public abstract class Item {
     private String name;
     private int price;

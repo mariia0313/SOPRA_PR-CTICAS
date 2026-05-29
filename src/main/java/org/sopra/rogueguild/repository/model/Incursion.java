@@ -5,6 +5,15 @@ import java.util.Random;
 import org.sopra.rogueguild.view.components.MessageView;
 
 
+/**
+ * Representa una incursión que el jugador puede realizar para obtener recompensas.
+ *
+ * Existen tres tipos: conquista (item de alto valor), saqueo (oro) y menor (item + oro).
+ * El tipo se determina por el parámetro de opción recibido en el constructor.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class Incursion {
 
     private String description;

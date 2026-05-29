@@ -1,5 +1,13 @@
 package org.sopra.rogueguild.repository.model;
 
+/**
+ * Representa un arma equipable por el jugador.
+ *
+ * Hereda de Item añadiendo el atributo de daño.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class Weapon extends Item {
 
     private int damage;

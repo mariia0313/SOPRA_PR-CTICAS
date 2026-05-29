@@ -2,6 +2,15 @@ package org.sopra.rogueguild.view.components;
 
 import org.sopra.rogueguild.controller.dto.BuyResponse;
 
+/**
+ * Componente de vista que muestra el resultado de un intento de compra.
+ *
+ * Interpreta el estado del {@link org.sopra.rogueguild.controller.dto.BuyResponse}
+ * y delega el mensaje correspondiente a {@link MessageView}.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class BuyResultView {
     private final MessageView messages;
 
