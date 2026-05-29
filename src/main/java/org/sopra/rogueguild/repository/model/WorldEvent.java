@@ -1,5 +1,15 @@
 package org.sopra.rogueguild.repository.model;
 
+/**
+ * Representa un evento de mundo que afecta al precio de los items de la tienda.
+ *
+ * Puede aplicar un descuento o una subida de precio a una categoría concreta
+ * o a todos los items. La descripción del evento se genera automáticamente al construirlo.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
+
 public class WorldEvent {
 
     private String description;

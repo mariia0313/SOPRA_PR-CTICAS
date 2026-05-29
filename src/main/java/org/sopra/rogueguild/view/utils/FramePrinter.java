@@ -2,6 +2,15 @@ package org.sopra.rogueguild.view.utils;
 
 import java.io.PrintStream;
 
+/**
+ * Utilidad que imprime texto dentro de marcos decorativos en consola.
+ *
+ * Genera bordes ASCII de ancho configurable para encuadrar mensajes
+ * de forma visualmente consistente en toda la aplicación.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class FramePrinter {
     private final PrintStream out;
     private final int width;

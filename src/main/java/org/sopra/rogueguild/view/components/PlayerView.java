@@ -6,6 +6,15 @@ import static org.sopra.rogueguild.view.utils.Ansi.*;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.repository.model.Item;
 
+/**
+ * Componente de vista que renderiza la información del jugador.
+ *
+ * Muestra el estado general del jugador (nombre, oro, inventario)
+ * y el inventario detallado para la pantalla de venta.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class PlayerView {
     private final PrintStream out;
 

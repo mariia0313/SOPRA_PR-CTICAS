@@ -6,6 +6,15 @@ import static org.sopra.rogueguild.view.utils.Ansi.PURP;
 import static org.sopra.rogueguild.view.utils.Ansi.RED;
 import static org.sopra.rogueguild.view.utils.Ansi.c;
 
+/**
+ * Componente de vista que renderiza el banner principal y el menú de opciones.
+ *
+ * Muestra el logo del juego con colores ANSI y las opciones disponibles
+ * para el jugador en cada iteración del bucle principal.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class BannerView {
     private final PrintStream out;
 

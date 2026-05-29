@@ -1,5 +1,14 @@
 package org.sopra.rogueguild.repository.model;
 
+/**
+ * Representa un item de rareza especial disponible en la tienda.
+ *
+ * Hereda de Item con un atributo de valor genérico.
+ * Tiene baja probabilidad de aparecer al generar items aleatorios.
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class Others extends Item {
 
   private int value;

@@ -11,6 +11,15 @@ import org.sopra.rogueguild.view.components.MessageView;
 import org.sopra.rogueguild.view.components.PlayerView;
 import org.sopra.rogueguild.view.components.StockView;
 
+/**
+ * Fachada de la capa de vista que centraliza el acceso a todos los componentes visuales.
+ *
+ * Delega cada operación de presentación al componente correspondiente
+ * (banner, mensajes, jugador, stock, resultado de compra).
+ *
+ * @author Marc Nacher
+ * @author Maria Herrero
+ */
 public class ViewDisplay {
     private final BannerView banner;
     private final MessageView messages;
