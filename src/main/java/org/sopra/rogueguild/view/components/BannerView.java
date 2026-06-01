@@ -38,7 +38,8 @@ public class BannerView {
         out.println("|| |  [5] Realizar una misión                      | ||");
         out.println("|| |  [6] Equipar Item                             | ||");
         out.println("|| |  [7] Desequipar item                          | ||");
-        out.println("|| |  [8] Ver items equipados                      | ||");         
+        out.println("|| |  [8] Ver items equipados                      | ||");
+        out.println("|| |  [9] Viajar a otra ciudad                     | ||");           
         out.println("|| |" + c(Ansi.GRAY, "  [0] Salir                                    ") + "| ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
