@@ -91,7 +91,7 @@ public class Player {
     public String showInventory(){
         String items = "";
         for (int i = 0; i < inventory.size(); i++){
-            items += (i+1) + ". " + inventory.get(i).toString() + "\n ";
+            items += "\n       | ░ " + (i+1) + ". " + inventory.get(i).toString();
         }
 
         return items;
@@ -146,6 +146,9 @@ public class Player {
     }
     public City getCurrenCity(){
         return this.currenCity;
+    }
+    public void setName(String name){
+        this.name = name;
     }
 
 }

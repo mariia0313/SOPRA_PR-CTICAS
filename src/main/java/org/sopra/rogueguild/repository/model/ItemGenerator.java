@@ -29,20 +29,17 @@ public class ItemGenerator {
     }
     
     public Item createRandomItem(){
-        ItemCategory [] categories = ItemCategory.values();
-        ItemCategory selectedCategory = categories[random.nextInt(categories.length)];
-        Random random = new Random();
-        int numero = random.nextInt(categories.length);
         boolean isUnique = false;
         String name = "";
         int trys = 0;
+        ItemCategory selectedCategory;
         int maxPrice = 0;
         int minPrice = 0;
         int atributteValue = 0;
         int finalPrice = 0;
         Item item = null;
 
-        int probability = random.nextInt(100) + 1; 
+        int probability = this.random.nextInt(100) + 1; 
         
         if (probability <= 5) {
             selectedCategory = ItemCategory.OTHERS;
@@ -54,11 +51,11 @@ public class ItemGenerator {
                 ItemCategory.ARMOR, 
                 ItemCategory.WEAPON
             };
-            selectedCategory = comunes[random.nextInt(comunes.length)];
+            selectedCategory = comunes[this.random.nextInt(comunes.length)];
         }
         
         while(!isUnique){
-            String suffix = suffixes[random.nextInt(suffixes.length)];
+            String suffix = suffixes[this.random.nextInt(suffixes.length)];
             String preffix = selectedCategory.getRandomPrefix();
             name = preffix + " " + suffix;
             if(generatedItems.add(name) || trys > 50){
@@ -72,49 +69,47 @@ public class ItemGenerator {
             case POTION:
                 maxPrice = 40;
                 minPrice = 10;
-                atributteValue = random.nextInt(50);
+                atributteValue = this.random.nextInt(50);
                 finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Potion(name, finalPrice, atributteValue);
                 break;
             case BOOTS: 
                 minPrice = 20;
                 maxPrice = 100;
-                atributteValue = random.nextInt(50);
+                atributteValue = this.random.nextInt(50);
                 finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Boots(name, finalPrice, atributteValue); 
                 break; 
             case HELMET: 
                 minPrice = 20; 
                 maxPrice = 150;
-                atributteValue = random.nextInt(50);
+                atributteValue = this.random.nextInt(50);
                 finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Helmet(name, finalPrice, atributteValue); 
                 break; 
             case ARMOR: 
                 minPrice = 50; 
                 maxPrice = 200;
-                atributteValue = random.nextInt(50);
+                atributteValue = this.random.nextInt(50);
                 finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Armor(name, finalPrice, atributteValue); 
                 break; 
             case WEAPON:
                 minPrice = 100; 
                 maxPrice = 300;
-                atributteValue = random.nextInt(50);
+                atributteValue = this.random.nextInt(50);
                 finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Weapon(name, finalPrice, atributteValue); 
                 break;
-            
             case OTHERS:
                 minPrice = 250; 
                 maxPrice = 300;
-                atributteValue = random.nextInt(50);
+                atributteValue = this.random.nextInt(50);
                 finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Others(name, finalPrice, atributteValue);
                 break;
-            }
+        }
 
-            
         return item;
     }
 
