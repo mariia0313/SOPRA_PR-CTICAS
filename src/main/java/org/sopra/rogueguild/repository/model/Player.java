@@ -19,6 +19,7 @@ public class Player {
     private List<Item> inventory = new ArrayList<>();
     private ArrayList<Quest> quests = new ArrayList<>();
     private ArrayList<Item> ItemEquipped = new ArrayList<>();
+    private City currenCity;
 
     /**
      * Crea un nuevo jugador con nombre y oro iniciales.
@@ -28,9 +29,10 @@ public class Player {
      * @param gold cantidad de oro inicial
      */
 
-    public Player(String name, int gold) {
+    public Player(String name, int gold, City startingCity) {
         this.name = name;
         this.gold = gold;
+        this.currenCity = startingCity;
         equipItems();
 
     }
@@ -137,6 +139,13 @@ public class Player {
      */
     public ArrayList<Item> getItemEquipped(){
         return this.ItemEquipped;
+    }
+
+    public void setCurrentCity(City city){
+        this.currenCity = city;
+    }
+    public City getCurrenCity(){
+        return this.currenCity;
     }
 
 }
