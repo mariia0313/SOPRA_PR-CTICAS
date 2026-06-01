@@ -13,9 +13,9 @@ public class App {
         ViewDisplay view = new ViewDisplay();
 
         City startingCity = createWorldMap();
-        Player player = new Player( "Iñigo Montolla", 500, startingCity);
+        Player player = new Player( "Iñigo Montolla", 500);
 
-        ShopController controller = new ShopController(player, view, repository);
+        ShopController controller = new ShopController(player, view, repository, startingCity);
         controller.start();
     }
 }

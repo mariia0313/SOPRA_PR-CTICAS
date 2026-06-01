@@ -7,6 +7,7 @@ import org.sopra.rogueguild.controller.dto.BuyResponse;
 import org.sopra.rogueguild.repository.ShopRepository;
 import org.sopra.rogueguild.repository.model.Armor;
 import org.sopra.rogueguild.repository.model.Boots;
+import org.sopra.rogueguild.repository.model.City;
 import org.sopra.rogueguild.repository.model.Helmet;
 import org.sopra.rogueguild.repository.model.Incursion;
 import org.sopra.rogueguild.repository.model.Item;
@@ -37,12 +38,14 @@ public class ShopController {
     private final ViewDisplay view;
     private final ShopRepository repository;
     private final Scanner sc;
+    private City startingCity;
 
-    public ShopController(Player p, ViewDisplay v, ShopRepository r) {
+    public ShopController(Player p, ViewDisplay v, ShopRepository r, City startingCity) {
         this.player = p;
         this.view = v;
         this.repository = r;
         this.sc = new Scanner(System.in);
+        this.startingCity = startingCity;
     }
     
     public void start() throws Exception {
@@ -56,6 +59,7 @@ public class ShopController {
         message.showMessage("¡Bienvenido a ROGUE GUILD! ¿Cúal es tu nombre?"); 
         String name = sc.nextLine();
         player.setName(name);
+        player.setCurrentCity(startingCity);
 
         do {
             view.landingPage();
@@ -159,6 +163,10 @@ public class ShopController {
                     break;
                 case 8:
                     message.showMessage(showEquippedItems());
+                    break;
+
+                case 9:
+                    travelProcess();
                     break;
                 case 0:
                     view.quitMessage();
@@ -427,4 +435,46 @@ public class ShopController {
         return itemsEquipped;
     }
     
+
+private void travelProcess() {
+        MessageView message = new MessageView(System.out, 10);
+        
+        System.out.println("\n=================================================");
+        System.out.println("   VIAJAR A OTRA CIUDAD");
+        System.out.println("   Ciudad actual: " + player.getCurrenCity().getName());
+        System.out.println("=================================================");
+        System.out.println("| 1. Oakhaven");
+        System.out.println("| 2. Sylvanwood");
+        System.out.println("| 3. Timberwall");
+        System.out.println("| 4. Ironstone");
+        System.out.println("| 5. Stormport");
+        System.out.println("| 6. Mossdeep");
+        System.out.println("| 7. Ravencrest");
+        System.out.println("=================================================");
+        System.out.print("| Seleccione el número de la ciudad destino: ");
+        
+        int seleccion = readNumber();
+        City destino = null;
+
+        switch (seleccion) {
+            case 1: destino = new City("Oakhaven"); break;
+            case 2: destino = new City("Sylvanwood"); break;
+            case 3: destino = new City("Timberwall"); break;
+            case 4: destino = new City("Ironstone"); break;
+            case 5: destino = new City("Stormport"); break;
+            case 6: destino = new City("Mossdeep"); break;
+            case 7: destino = new City("Ravencrest"); break;
+            default:
+                message.showMessage("Selección de ciudad inválida.");
+        }
+
+        if (destino != null) {
+            String resultadoViaje = player.travelTo(destino);
+            message.showMessage(resultadoViaje);
+            
+            if (resultadoViaje.contains("¡Has llegado")) {
+                player.setCurrentCity(destino); 
+            }
+        }
+    }
 }

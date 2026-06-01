@@ -12,7 +12,13 @@ package org.sopra.rogueguild.repository.model;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 public class Player {
     private String name;
     private int gold;
@@ -29,10 +35,9 @@ public class Player {
      * @param gold cantidad de oro inicial
      */
 
-    public Player(String name, int gold, City startingCity) {
+    public Player(String name, int gold) {
         this.name = name;
         this.gold = gold;
-        this.currenCity = startingCity;
         equipItems();
 
     }
@@ -150,6 +155,50 @@ public class Player {
     public void setName(String name){
         this.name = name;
     }
+
+    public String travelTo(City destination) {  
+        String result = "";
+
+        if (this.currenCity.getName().equalsIgnoreCase(destination.getName())) {
+            result = "Ya estás en la ciudad " + currenCity.getName();
+        } else {
+            List<City> route = findRoute(this.currenCity, destination);
+
+            if (route.isEmpty()) {
+                result = "El viaje no es posible: no hay ninguna ruta que conecte " 
+                         + this.currenCity.getName() + " con " + destination.getName();
+            } else {
+                City destinoReal = route.get(route.size() - 1);
+                this.currenCity = destinoReal;
+                result = "¡Has llegado a tu destino: " + this.currenCity.getName() + "!";
+            }
+        }
+
+        return result;
+    }
+
+    private List<City> findRoute(City start, City target) {
+    List<City> path = new ArrayList<>();
+
+    for (City vecino : start.getConnections()) {
+        if (path.isEmpty() && vecino.getName().equalsIgnoreCase(target.getName())) {
+            path.add(vecino);
+        }
+    }
+
+    if (path.isEmpty()) {
+        for (City vecino : start.getConnections()) {
+            for (City vecinoDelVecino : vecino.getConnections()) {
+                if (path.isEmpty() && vecinoDelVecino.getName().equalsIgnoreCase(target.getName())) {
+                    path.add(vecino);
+                    path.add(vecinoDelVecino);
+                }
+            }
+        }
+    }
+
+    return path;
+}
 
 }
 
