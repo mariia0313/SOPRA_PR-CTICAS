@@ -1,10 +1,8 @@
 package org.sopra.rogueguild.repository.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.sopra.rogueguild.repository.ShopRepository;
 
