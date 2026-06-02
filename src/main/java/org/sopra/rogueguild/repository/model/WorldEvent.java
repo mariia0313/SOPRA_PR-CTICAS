@@ -44,7 +44,7 @@ public class WorldEvent {
                 break;
             case "POTION": 
                 if(discountOrPriceRise == 0){
-                    description = "Las armas tienen un descuento del " + percentage + "%";
+                    description = "Las pociones tienen un descuento del " + percentage + "%";
                 }else{
                     description = "Las pociones han aumentado su precio un " + percentage + "%";
                 }
