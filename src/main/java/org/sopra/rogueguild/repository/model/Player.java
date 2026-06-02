@@ -33,7 +33,7 @@ public class Player {
     public Player(String name, int gold) {
         this.name = name;
         this.gold = gold;
-        this.hitPoints = 20;
+        this.hitPoints = 10;
         equipItems();
 
     }
@@ -61,12 +61,19 @@ public class Player {
      /** @return oro actual del jugador */
     public int getGold() { return gold; }
 
+    public int getHitPoints(){
+        return hitPoints;
+    }
+
      /**
      * Descuenta el precio del item del oro del jugador y lo añade al inventario.
      *
      * @param item item a comprar; su precio se resta del oro actual
      */
-    public void buy(Item item) { this.gold -= item.getPrice(); addItem(item); }
+    public void buy(Item item) {
+            this.gold -= item.getPrice(); addItem(item);
+    }
+
     public void removeItem(Item item) {
         boolean removed = inventory.remove(item);
         if (!removed) {
@@ -203,12 +210,14 @@ public String healPlayer(Potion potion){
     }
     else if(this.hitPoints + potion.getHealPoint() >= 20){
         int beforeCuring = this.hitPoints;
-        this.hitPoints += potion.getHealPoint();
+        this.hitPoints = 20;
         result = "Has alcanzado el límite de vida, te has curado " + (this.hitPoints - beforeCuring);
     }else{
         this.hitPoints += potion.getHealPoint();
         result = "Te has curado " + potion.getHealPoint();
     }
+
+    this.gold -= potion.getPrice();
 
     return result;
 }
