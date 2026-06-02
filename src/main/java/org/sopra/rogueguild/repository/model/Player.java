@@ -12,13 +12,7 @@ package org.sopra.rogueguild.repository.model;
  */
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
 public class Player {
     private String name;
     private int gold;
@@ -26,6 +20,7 @@ public class Player {
     private ArrayList<Quest> quests = new ArrayList<>();
     private ArrayList<Item> ItemEquipped = new ArrayList<>();
     private City currenCity;
+    private int hitPoints;
 
     /**
      * Crea un nuevo jugador con nombre y oro iniciales.
@@ -38,6 +33,7 @@ public class Player {
     public Player(String name, int gold) {
         this.name = name;
         this.gold = gold;
+        this.hitPoints = 20;
         equipItems();
 
     }
@@ -198,6 +194,12 @@ public class Player {
     }
 
     return path;
+}
+
+public int healPlayer(Potion potion){
+    if(this.hitPoints < 20){
+        this.hitPoints += potion.
+    }
 }
 
 }
