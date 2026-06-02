@@ -237,11 +237,11 @@ public class ShopController {
             } else {
                 String requirements = "No se cumplen con los requisitos requeridos para completar la misión";
                 if (!quest.hasRequiredItems()) {
-                    requirements += "\n" + ((StatQuest) quest).requirementsLeftStatQuest(player);
+                    requirements += "\n|| " + ((StatQuest) quest).requirementsLeftStatQuest(player);
                 } else {
                     if (!quest.requirementsLeft(player).isEmpty()) {
                     for (ItemCategory category : quest.requirementsLeft(player)) {
-                       requirements += "\nNecesitas un objeto de categoría " + category.name(); 
+                       requirements += "\n|| Necesitas un objeto de categoría " + category.name(); 
                     }
                     }
                 }
@@ -280,7 +280,7 @@ public class ShopController {
                 player.removeItem(item);
                 result = "Arma equipada en la segunda ranura.";
             } else {
-                message.showMessage("Ya tienes un item de este tipo equipado. Desea remplazarlo? (Si: 1,  No: 2)  \nItem actual: " + itemEquipped.get(3).toString());
+                message.showMessage("Ya tienes un item de este tipo equipado. Desea remplazarlo por el de daño más bajo? (Si: 1,  No: 2)\n | Arma 1: " + itemEquipped.get(0).toString() + " | Arma 2: " + itemEquipped.get(1).toString());
                 option = readNumber();
                 if(option!=-1){
                     if(option == 1){
@@ -368,7 +368,8 @@ public class ShopController {
                 }
                 break;
             default:
-                throw new AssertionError();
+                result = "El item no se puede equipar, es de tipo " + item.getItemCategory();
+                break;
         }
         return result;
     }
@@ -411,7 +412,8 @@ public class ShopController {
                         break;
                         
                     default:
-                        throw new AssertionError();
+                        result = "Opción no válida";
+                        break;
                 }
                 
                 return result;
@@ -422,7 +424,7 @@ public class ShopController {
         int quantityItems = 0;
         for (int i = 0; i < player.getItemEquipped().size(); i++) {
             if (player.getItemEquipped().get(i).getName() != null) {
-                itemsEquipped += "| " + (quantityItems+1) + " " + player.getItemEquipped().get(i).toString() + "\n";
+                itemsEquipped += "\n|| " + (quantityItems+1) + " " + player.getItemEquipped().get(i).toString();
                 player.getItemEquipped().get(i).setId(quantityItems);
                 quantityItems++;
             }
@@ -453,28 +455,31 @@ private void travelProcess() {
         System.out.println("=================================================");
         System.out.print("| Seleccione el número de la ciudad destino: ");
         
-        int seleccion = readNumber();
-        City destino = null;
-
-        switch (seleccion) {
-            case 1: destino = new City("Oakhaven"); break;
-            case 2: destino = new City("Sylvanwood"); break;
-            case 3: destino = new City("Timberwall"); break;
-            case 4: destino = new City("Ironstone"); break;
-            case 5: destino = new City("Stormport"); break;
-            case 6: destino = new City("Mossdeep"); break;
-            case 7: destino = new City("Ravencrest"); break;
-            default:
-                message.showMessage("Selección de ciudad inválida.");
-        }
-
-        if (destino != null) {
-            String resultadoViaje = player.travelTo(destino);
-            message.showMessage(resultadoViaje);
-            
-            if (resultadoViaje.contains("¡Has llegado")) {
-                player.setCurrentCity(destino); 
+        int option = readNumber();
+        if (option != -1) {
+            City destination = null;
+    
+            switch (option) {
+                case 1: destination = new City("Oakhaven"); break;
+                case 2: destination = new City("Sylvanwood"); break;
+                case 3: destination = new City("Timberwall"); break;
+                case 4: destination = new City("Ironstone"); break;
+                case 5: destination = new City("Stormport"); break;
+                case 6: destination = new City("Mossdeep"); break;
+                case 7: destination = new City("Ravencrest"); break;
+                default:
+                    message.showMessage("Selección de ciudad inválida.");
             }
+    
+            if (destination != null) {
+                String resultadoViaje = player.travelTo(destination);
+                message.showMessage(resultadoViaje);
+                
+                if (resultadoViaje.contains("¡Has llegado")) {
+                    player.setCurrentCity(destination); 
+                }
+            }
+
         }
     }
 }
