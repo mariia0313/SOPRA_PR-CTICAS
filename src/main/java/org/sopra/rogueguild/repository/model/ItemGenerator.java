@@ -69,7 +69,7 @@ public class ItemGenerator {
             case POTION:
                 maxPrice = 40;
                 minPrice = 10;
-                atributteValue = this.random.nextInt(50);
+                atributteValue = this.random.nextInt(20);
                 finalPrice = getFinalPrice(maxPrice, minPrice, atributteValue);
                 item = new Potion(name, finalPrice, atributteValue);
                 break;

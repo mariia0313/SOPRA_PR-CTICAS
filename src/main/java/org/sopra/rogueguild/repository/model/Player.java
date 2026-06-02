@@ -196,10 +196,21 @@ public class Player {
     return path;
 }
 
-public int healPlayer(Potion potion){
-    if(this.hitPoints < 20){
-        this.hitPoints += potion.
+public String healPlayer(Potion potion){
+    String result = "";
+    if(this.hitPoints==20){
+        result = "Ya tienes el máximo de vida";
     }
+    else if(this.hitPoints + potion.getHealPoint() >= 20){
+        int beforeCuring = this.hitPoints;
+        this.hitPoints += potion.getHealPoint();
+        result = "Has alcanzado el límite de vida, te has curado " + (this.hitPoints - beforeCuring);
+    }else{
+        this.hitPoints += potion.getHealPoint();
+        result = "Te has curado " + potion.getHealPoint();
+    }
+
+    return result;
 }
 
 }
