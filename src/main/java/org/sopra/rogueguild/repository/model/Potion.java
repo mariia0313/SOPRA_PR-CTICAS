@@ -10,14 +10,18 @@ package org.sopra.rogueguild.repository.model;
  */
 public class Potion extends Item {
 
-    private int healingAmount;
+    private int healPoint;
 
-    public Potion(String name, int price, int healingAmount) {
+    public Potion(String name, int price, int healPoint) {
         super(name, price, ItemCategory.POTION);
-        this.healingAmount = healingAmount;
+        this.healPoint = healPoint;
     }
 
     public String toString(){
-        return getName() + " (" + getPrice() + " oro) | Curación: " + healingAmount;
+        return getName() + " (" + getPrice() + " oro) | Curación: " + healPoint;
+    }
+
+    public int getHealPoint(){
+        return healPoint;
     }
 }
