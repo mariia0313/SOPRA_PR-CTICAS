@@ -64,7 +64,11 @@ public class Incursion {
         ItemGenerator item = new ItemGenerator();
         this.itemReward = item.createRandomItem();
         this.description = "Has obtenido el objeto " + itemReward.getName();
-        player.addItem(itemReward);
+        if (itemReward.getItemCategory().equals(ItemCategory.POTION)) {
+            this.description += "\n|| " + player.healPlayer((Potion)itemReward);
+        } else {
+            player.addItem(itemReward);
+        }
     }
     
     public void createIncursionMinorItemWithGold(Player player) throws Exception{
@@ -77,17 +81,22 @@ public class Incursion {
         rawGold = random.nextInt(30) + 1;
         this.goldReward = (int) (Math.round(rawGold / 5.0) * 5);
         this.itemReward = item;
+        this.description = "Has obtenido el objeto " + itemReward.getName();
+        if (itemReward.getItemCategory().equals(ItemCategory.POTION)) {
+            this.description += "\n|| " + player.healPlayer((Potion)itemReward);
+        } else {
+            player.addItem(itemReward);
+        }
         int oldGold = player.getGold();
 
         try {
             player.addGold(goldReward);
-            this.description = "Has obtenido " + this.goldReward + " de oro";
+            this.description += "\n|| Has obtenido " + this.goldReward + " de oro";
         } catch (Exception e){
             int realRecievedOre = 500 - oldGold;
-            this.description = "Has obtenido " + realRecievedOre + " de oro (Límite alcanzado)";
+            this.description += "\n|| Has obtenido " + realRecievedOre + " de oro (Límite alcanzado)";
         }
 
-        player.addItem(itemReward);
     }
 
 

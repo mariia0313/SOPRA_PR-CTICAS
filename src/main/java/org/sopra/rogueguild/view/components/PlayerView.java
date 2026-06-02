@@ -28,6 +28,7 @@ public class PlayerView {
         out.println("       | ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
         out.println("       | ░    NOMBRE:        " + player.getName());
         out.println("       | ░    ORO:           " + player.getGold() + " monedas");
+        out.println("       | ░    VIDA:          " + player.getHitPoints() + " vida");
         out.println("       | ░    INVENTARIO:    " + player.showInventory());
         out.println();
     }
