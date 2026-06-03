@@ -181,7 +181,9 @@ public class ShopController {
     private BuyResponse buyProcess(int id) {
         MessageView message = new MessageView(System.out, 10);
         Item item = repository.getItem(id);
-        if (item == null) {
+        if(item.getItemCategory().equals(ItemCategory.POTION) && player.getHitPoints() == 20) {
+            message.showMessage("Ya tienes la vida al máximo");
+        } else if (item == null) {
             return BuyResponse.notFound(id);
         } else if (player.getGold() < item.getPrice()) {
             return BuyResponse.notEnoughGold(item, player.getGold());
@@ -192,8 +194,8 @@ public class ShopController {
                 message.showMessage(player.healPlayer((Potion)item));
                 player.removeItem(item);
             }
-            return BuyResponse.success(item);
         }
+        return BuyResponse.success(item);
     }
 
     private void sellProcess(Item item) throws Exception {
