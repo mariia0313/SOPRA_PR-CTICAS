@@ -133,7 +133,7 @@ public class ShopController {
                     System.out.print("| Introduzca el número del item a equipar: ");
                     int option3 = readNumber();
                     if (option3 != -1) {
-                        if (option3 < 1 || option3 > quests.getQuests().size()){
+                        if (option3 < 1 || option3 > player.getInventory().size()){
                             message.showMessage("Opción inválida");
                         } else {
                         message.showMessage(equipItem(player.getInventory().get(option3-1)));
@@ -227,9 +227,9 @@ public class ShopController {
 
     private void doQuest(int opt, Quests quests) throws Exception{
         MessageView message = new MessageView(System.out, 10);
-        if (opt >= 1 && opt <= quests.getQuests().size() && quests.getQuests().get(opt-1).getStatus()==false){
+
         Quest quest = quests.getQuests().get(opt - 1);
-        if (quest.checkRequirement(player) == true) {
+        if (quest.checkRequirement(player) == true && quests.getQuests().get(opt-1).getStatus()==false) {
             int oldGold = player.getGold(); // Guardamos el oro actual ANTES de añadir el nuevo
             int goldReward = quest.getGoldReward();
             try {
@@ -241,7 +241,7 @@ public class ShopController {
                 quest.completeQuest();
                 message.showMessage("La misión ha sido completada. Solo pudiste reclamar " + realReceivedGold + " de oro debido al límite.");
             } 
-            } else {
+            } else if (quest.checkRequirement(player) == false && quests.getQuests().get(opt-1).getStatus()==false) {
                 String requirements = "No se cumplen con los requisitos requeridos para completar la misión";
                 if (!quest.hasRequiredItems()) {
                     requirements += "\n|| " + ((StatQuest) quest).requirementsLeftStatQuest(player);
@@ -253,11 +253,10 @@ public class ShopController {
                     }
                 }
                 message.showMessage(requirements);
+            } else {
+                message.showMessage("Opción no válida");
             }
 
-        } else {
-            message.showMessage("Esta misón ya ha sido completada");
-        }
         }
 
     private int readNumber() {
@@ -484,10 +483,6 @@ private void travelProcess() {
             if (destination != null) {
                 String resultadoViaje = player.travelTo(destination);
                 message.showMessage(resultadoViaje);
-                
-                if (resultadoViaje.contains("¡Has llegado")) {
-                    player.setCurrentCity(destination); 
-                }
             }
 
         }

@@ -1,5 +1,4 @@
 package org.sopra.rogueguild.repository.model;
-import org.sopra.rogueguild.view.components.MessageView;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +23,6 @@ public class Quest {
         this.goldReward = (int) (Math.round(goldReward / 5.0) * 5);
         this.requiredItems = requiredItems;
         isCompleted = false;
-        quests.addQuest(this);
     }
 
 

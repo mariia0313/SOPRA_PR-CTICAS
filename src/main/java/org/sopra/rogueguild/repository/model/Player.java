@@ -220,9 +220,6 @@ public String healPlayer(Potion potion){
         this.hitPoints += potion.getHealPoint();
         result = "Te has curado " + potion.getHealPoint();
     }
-
-    this.gold -= potion.getPrice();
-
     return result;
 }
 

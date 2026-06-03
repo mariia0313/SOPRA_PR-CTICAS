@@ -3,8 +3,6 @@ package org.sopra.rogueguild.repository.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sopra.rogueguild.view.components.MessageView;
-
 /**
  * Colección de misiones disponibles en el juego.
  *
