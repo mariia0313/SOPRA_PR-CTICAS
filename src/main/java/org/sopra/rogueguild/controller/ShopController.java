@@ -39,6 +39,7 @@ public class ShopController {
     private final ShopRepository repository;
     private final Scanner sc;
     private City startingCity;
+    private Quests quests = new Quests();
 
     public ShopController(Player p, ViewDisplay v, ShopRepository r, City startingCity) {
         this.player = p;
@@ -46,11 +47,10 @@ public class ShopController {
         this.repository = r;
         this.sc = new Scanner(System.in);
         this.startingCity = startingCity;
+        quests.createInitialQuests();
     }
     
     public void start() throws Exception {
-        Quests quests = new Quests();
-        quests.createInitialQuests();
         WorldEventGenerator worldEventGenerator = new WorldEventGenerator();
         WorldEvent worldEvent = worldEventGenerator.generateRandomWorldEventer(repository);
         MessageView message = new MessageView(System.out, 10);
@@ -221,6 +221,7 @@ public class ShopController {
 
     private void doQuest(int opt, Quests quests) throws Exception{
         MessageView message = new MessageView(System.out, 10);
+        if (opt >= 1 && opt <= quests.getQuests().size() && quests.getQuests().get(opt-1).getStatus()==false){
         Quest quest = quests.getQuests().get(opt - 1);
         if (quest.checkRequirement(player) == true) {
             int oldGold = player.getGold(); // Guardamos el oro actual ANTES de añadir el nuevo
@@ -245,8 +246,11 @@ public class ShopController {
                     }
                     }
                 }
+                message.showMessage(requirements);
+            }
 
-            message.showMessage(requirements);
+        } else {
+            message.showMessage("Esta misón ya ha sido completada");
         }
         }
 
