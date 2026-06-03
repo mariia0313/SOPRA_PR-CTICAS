@@ -13,6 +13,7 @@ import org.sopra.rogueguild.repository.model.Incursion;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.ItemCategory;
 import org.sopra.rogueguild.repository.model.Player;
+import org.sopra.rogueguild.repository.model.Potion;
 import org.sopra.rogueguild.repository.model.Quest;
 import org.sopra.rogueguild.repository.model.Quests;
 import org.sopra.rogueguild.repository.model.StatQuest;
@@ -178,16 +179,21 @@ public class ShopController {
     }
 
     private BuyResponse buyProcess(int id) {
+        MessageView message = new MessageView(System.out, 10);
         Item item = repository.getItem(id);
         if (item == null) {
             return BuyResponse.notFound(id);
-        }
-        if (player.getGold() < item.getPrice()) {
+        } else if (player.getGold() < item.getPrice()) {
             return BuyResponse.notEnoughGold(item, player.getGold());
+        } else {
+            player.buy(item);
+            repository.removeItem(id);
+            if (item.getItemCategory().equals(ItemCategory.POTION)) {
+                message.showMessage(player.healPlayer((Potion)item));
+                player.removeItem(item);
+            }
+            return BuyResponse.success(item);
         }
-        player.buy(item);
-        repository.removeItem(id);
-        return BuyResponse.success(item);
     }
 
     private void sellProcess(Item item) throws Exception {

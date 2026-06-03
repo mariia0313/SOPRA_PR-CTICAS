@@ -29,7 +29,7 @@ public class WorldEventGenerator{
         int targetItem = random.nextInt(6);
         Map<Integer, Item> stock = shopRepository.getAllStock();
         String target = "";
-        int percentage = random.nextInt(21) * 5;
+        int percentage = random.nextInt(21) * 4;
         int discountOrPriceRise = random.nextInt(2);
         double rawPrice = 0;
         int finalPrice = 0;

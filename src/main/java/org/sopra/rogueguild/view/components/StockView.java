@@ -20,29 +20,30 @@ public class StockView {
     public StockView(PrintStream out) { this.out = out; }
 
     public void displayStock(Map<Integer, Item> itemMap, boolean inPurchase) {
-        out.println("  ___________________________________________________");
-        out.println(" /  _______________________________________________  \\");
-        out.println("|| /                                               \\ ||");
-        out.println("|| |           INVENTARIO DE LA TIENDA             | ||");
-        out.println("|| | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ||");
-        out.println("|| |                                               | ||");
+        out.println("  _______________________________________________________________");
+        out.println(" /  ___________________________________________________________  \\");
+        out.println("|| /                                                           \\ ||");
+        out.println("|| |                    INVENTARIO DE LA TIENDA                | ||");
+        out.println("|| | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ||");
+        out.println("|| |                                                           | ||");
 
         itemMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEach(e -> {
                     int id = e.getKey();
                     Item item = e.getValue();
+                    
+                    String infoItem = item.toString();
+
                     if (inPurchase) {
-                        out.printf("|| |  [%d] %-28s %4d oro    | ||%n",
-                                id, item.getName(), item.getPrice());
+                        out.printf("|| |  [%d] %-50s  | ||%n", id, infoItem);
                     } else {
-                        out.printf("|| |  [%s] %-28s %4d oro    | ||%n",
-                                "-", item.getName(), item.getPrice());
+                        out.printf("|| |  [%s] %-50s  | ||%n", "-", infoItem);
                     }
                 });
 
-        out.println("|| |                                               | ||");
-        out.println("|| \\_______________________________________________/ ||");
-        out.println(" \\___________________________________________________/");
+        out.println("|| |                                                           | ||");
+        out.println("|| \\___________________________________________________________/ ||");
+        out.println(" \\_______________________________________________________________/");
     }
 }
